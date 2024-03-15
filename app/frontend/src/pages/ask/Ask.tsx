@@ -187,8 +187,8 @@ export function Component(): JSX.Element {
     return (
         <div className={styles.askContainer}>
             <div className={styles.askTopSection}>
-                <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
-                <h1 className={styles.askTitle}>Ask your data</h1>
+                {/* <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
+                <h1 className={styles.askTitle}>Ask ChatICT</h1>
                 <div className={styles.askQuestionInput}>
                     <QuestionInput
                         placeholder="Example: Cosa'è un Allegato A?"
