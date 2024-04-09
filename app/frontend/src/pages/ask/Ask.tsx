@@ -9,6 +9,7 @@ import { QuestionInput } from "../../components/QuestionInput";
 import { ExampleList } from "../../components/Example";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton/SettingsButton";
+import { Button } from "@fluentui/react-components";
 import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
 import { VectorSettings } from "../../components/VectorSettings";
 import { GPT4VSettings } from "../../components/GPT4VSettings";
@@ -23,7 +24,7 @@ export function Component(): JSX.Element {
     const [promptTemplateSuffix, setPromptTemplateSuffix] = useState<string>("");
     const [temperature, setTemperature] = useState<number>(0.3);
     const [retrievalMode, setRetrievalMode] = useState<RetrievalMode>(RetrievalMode.Hybrid);
-    const [retrieveCount, setRetrieveCount] = useState<number>(3);
+    const [retrieveCount, setRetrieveCount] = useState<number>(1);
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
     const [useSemanticCaptions, setUseSemanticCaptions] = useState<boolean>(false);
     const [useGPT4V, setUseGPT4V] = useState<boolean>(false);
@@ -135,7 +136,7 @@ export function Component(): JSX.Element {
     };
 
     const onRetrieveCountChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
-        setRetrieveCount(parseInt(newValue || "3"));
+        setRetrieveCount(parseInt(newValue || "1"));
     };
 
     const onRetrievalModeChange = (_ev: React.FormEvent<HTMLDivElement>, option?: IDropdownOption<RetrievalMode> | undefined, index?: number | undefined) => {
@@ -187,11 +188,20 @@ export function Component(): JSX.Element {
     return (
         <div className={styles.askContainer}>
             <div className={styles.askTopSection}>
-                {/* <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
+                <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
+                {/* <CopyrightButton className={styles.commandButton} onClick={} disabled={!lastQuestionRef.current || isLoading} /> */}
+                {/* <Button
+                    className={styles.settingsButton}
+                    style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "none" }}
+                    icon={<img src="../../../public/copyright3.png" alt="copyright" width={20} />}
+                >
+                    {"_ICT Directorate_"}
+                </Button> */}
+
                 <h1 className={styles.askTitle}>Ask ChatICT</h1>
                 <div className={styles.askQuestionInput}>
                     <QuestionInput
-                        placeholder="Example: Cosa'è un Allegato A?"
+                        placeholder="Example: What can ChatICT do?"
                         disabled={isLoading}
                         initQuestion={question}
                         onSend={question => makeApiRequest(question)}

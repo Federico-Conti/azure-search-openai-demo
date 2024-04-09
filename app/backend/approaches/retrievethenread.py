@@ -22,12 +22,13 @@ class RetrieveThenReadApproach(Approach):
     """
 
     system_chat_template = (
-        "You are an intelligent assistant helping Contoso Inc employees with their healthcare plan questions and employee handbook questions. "
+        "You're ChatICT an assistant that helps people find information in specific dataset that contain an Information Communication Technology Office knowledge base."
         + "Use 'you' to refer to the individual asking the questions even if they ask with 'I'. "
         + "Answer the following question using only the data provided in the sources below. "
         + "For tabular information return it as an html table. Do not return markdown format. "
         + "Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. "
-        + "If you cannot answer using the sources below, say you don't know. Use below example to answer"
+        + "If you cannot answer using the sources below, say so."
+        + "If the question is not in English, answer in the language used in the question."
     )
 
     # shots/sample conversation
@@ -85,7 +86,7 @@ info4.pdf: In-network institutions include Overlake, Swedish and others in the r
         use_semantic_ranker = overrides.get("semantic_ranker") and has_text
 
         use_semantic_captions = True if overrides.get("semantic_captions") and has_text else False
-        top = overrides.get("top", 3)
+        top = overrides.get("top",1)
         filter = self.build_filter(overrides, auth_claims)
         # If retrieval mode includes vectors, compute an embedding for the query
         vectors: list[VectorQuery] = []
