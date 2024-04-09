@@ -2,7 +2,7 @@ import { Example } from "./Example";
 
 import styles from "./Example.module.css";
 
-const DEFAULT_EXAMPLES: string[] = ["Ho subito un furto, cosa devo fare?", "Mi servono cartelle condivise", "Devo restituire un telefono"];
+const DEFAULT_EXAMPLES: string[] = ["I need to install a software", "How can print without a badge", "I need to connect to the guest wifi"];
 
 const GPT4V_EXAMPLES: string[] = [
     "Compare the impact of interest rates and GDP in financial markets.",
