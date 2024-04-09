@@ -20,14 +20,14 @@ const Layout = () => {
                         <ul className={styles.headerNavList}>
                             <li>
                                 <NavLink to="/" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
-                                    Ask a question
-                                </NavLink>
-                            </li>
-                            <li className={styles.headerNavLeftMargin}>
-                                <NavLink to="chat" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
                                     Chat (preview)
                                 </NavLink>
                             </li>
+                            {/* <li className={styles.headerNavLeftMargin}>
+                                <NavLink to="/qa" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
+                                    Ask a question
+                                </NavLink>
+                            </li> */}
                             {/* <li className={styles.headerNavLeftMargin}>
                                 <a href="https://github.com/Federico-Conti" target={"_blank"} title="Github repository link">
                                     <img

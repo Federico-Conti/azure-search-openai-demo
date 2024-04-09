@@ -46,14 +46,12 @@ const router = createHashRouter([
         element: layout,
         children: [
             {
-                path: "",
-                lazy: () => import("./pages/ask/Ask")
+                index: true,
+                element: <Chat />
             },
             {
-                path: "chat",
-                // index: true,
-                // element: <Chat />
-                lazy: () => import("./pages/FutureSteps")
+                path: "qa",
+                lazy: () => import("./pages/ask/Ask")
             },
             {
                 path: "*",
