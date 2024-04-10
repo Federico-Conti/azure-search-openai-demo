@@ -202,7 +202,7 @@ export function Component(): JSX.Element {
                 <h1 className={styles.askTitle}>Ask your data</h1>
                 <div className={styles.askQuestionInput}>
                     <QuestionInput
-                        placeholder="Example: Does my plan cover annual eye exams?"
+                        placeholder="Example: I need to print without a badge"
                         disabled={isLoading}
                         initQuestion={question}
                         onSend={question => makeApiRequest(question)}
