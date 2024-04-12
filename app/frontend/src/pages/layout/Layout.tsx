@@ -27,9 +27,9 @@ const Layout = () => {
                                 <NavLink to="/qa" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
                                     Ask a question
                                 </NavLink>
-                            </li> */}
+                            </li>
                             {/* <li className={styles.headerNavLeftMargin}>
-                                <a href="https://github.com/Federico-Conti" target={"_blank"} title="Github repository link">
+                                <a href="https://aka.ms/entgptsearch" target={"_blank"} title="Github repository link">
                                     <img
                                         src={github}
                                         alt="Github logo"
@@ -42,7 +42,7 @@ const Layout = () => {
                             </li> */}
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText}>AI-generated answer </h4>
+                    <h4 className={styles.headerRightText}>AI-generated answer</h4>
                     {useLogin && <LoginButton />}
                 </div>
             </header>

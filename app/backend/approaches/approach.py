@@ -1,7 +1,17 @@
 import os
 from abc import ABC
 from dataclasses import dataclass
-from typing import Any, AsyncGenerator, Awaitable, Callable, List, Optional, Union, cast
+from typing import (
+    Any,
+    AsyncGenerator,
+    Awaitable,
+    Callable,
+    List,
+    Optional,
+    TypedDict,
+    Union,
+    cast,
+)
 from urllib.parse import urljoin
 
 import aiohttp
@@ -30,6 +40,8 @@ class Document:
     oids: Optional[List[str]]
     groups: Optional[List[str]]
     captions: List[QueryCaptionResult]
+    score: Optional[float] = None
+    reranker_score: Optional[float] = None
 
     def serialize_for_results(self) -> dict[str, Any]:
         return {
@@ -54,6 +66,8 @@ class Document:
                 if self.captions
                 else []
             ),
+            "score": self.score,
+            "reranker_score": self.reranker_score,
         }
 
     @classmethod
@@ -86,6 +100,7 @@ class Approach(ABC):
         query_speller: Optional[str],
         embedding_deployment: Optional[str],  # Not needed for non-Azure OpenAI or for retrieval_mode="text"
         embedding_model: str,
+        embedding_dimensions: int,
         openai_host: str,
         vision_endpoint: str,
         vision_token_provider: Callable[[], Awaitable[str]],
@@ -97,6 +112,7 @@ class Approach(ABC):
         self.query_speller = query_speller
         self.embedding_deployment = embedding_deployment
         self.embedding_model = embedding_model
+        self.embedding_dimensions = embedding_dimensions
         self.openai_host = openai_host
         self.vision_endpoint = vision_endpoint
         self.vision_token_provider = vision_token_provider
@@ -119,6 +135,8 @@ class Approach(ABC):
         vectors: List[VectorQuery],
         use_semantic_ranker: bool,
         use_semantic_captions: bool,
+        minimum_search_score: Optional[float],
+        minimum_reranker_score: Optional[float],
     ) -> List[Document]:
         # Use semantic ranker if requested and if retrieval mode is text or hybrid (vectors + text)
         if use_semantic_ranker and query_text:
@@ -153,9 +171,21 @@ class Approach(ABC):
                         oids=document.get("oids"),
                         groups=document.get("groups"),
                         captions=cast(List[QueryCaptionResult], document.get("@search.captions")),
+                        score=document.get("@search.score"),
+                        reranker_score=document.get("@search.reranker_score"),
                     )
                 )
-        return documents
+
+            qualified_documents = [
+                doc
+                for doc in documents
+                if (
+                    (doc.score or 0) >= (minimum_search_score or 0)
+                    and (doc.reranker_score or 0) >= (minimum_reranker_score or 0)
+                )
+            ]
+
+        return qualified_documents
 
     def get_sources_content(
         self, results: List[Document], use_semantic_captions: bool, use_image_citation: bool
@@ -186,10 +216,23 @@ class Approach(ABC):
             return sourcepage
 
     async def compute_text_embedding(self, q: str):
+        SUPPORTED_DIMENSIONS_MODEL = {
+            "text-embedding-ada-002": False,
+            "text-embedding-3-small": True,
+            "text-embedding-3-large": True,
+        }
+
+        class ExtraArgs(TypedDict, total=False):
+            dimensions: int
+
+        dimensions_args: ExtraArgs = (
+            {"dimensions": self.embedding_dimensions} if SUPPORTED_DIMENSIONS_MODEL[self.embedding_model] else {}
+        )
         embedding = await self.openai_client.embeddings.create(
-            # Azure Open AI takes the deployment name as the model name
+            # Azure OpenAI takes the deployment name as the model name
             model=self.embedding_deployment if self.embedding_deployment else self.embedding_model,
             input=q,
+            **dimensions_args,
         )
         query_vector = embedding.data[0].embedding
         return VectorizedQuery(vector=query_vector, k_nearest_neighbors=50, fields="embedding")

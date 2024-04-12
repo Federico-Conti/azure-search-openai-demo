@@ -27,7 +27,7 @@ class RetrieveThenReadVisionApproach(Approach):
     """
 
     system_chat_template_gpt4v = (
-        "You are an intelligent assistant helping analyze the Annual Financial Report of Contoso Ltd., The documents contain text, graphs, tables and images. "
+        "You're ChatICT an assistant that helps people find information in specific dataset that contain an Information Communication Technology Office knowledge base., The documents contain text, graphs, tables and images. "
         + "Each image source has the file name in the top left corner of the image with coordinates (10,10) pixels and is in the format SourceFileName:<file_name> "
         + "Each text source starts in a new line and has the file name followed by colon and the actual information "
         + "Always include the source name from the image or text for each fact you use in the response in the format: [filename] "
@@ -48,6 +48,7 @@ class RetrieveThenReadVisionApproach(Approach):
         gpt4v_model: str,
         embedding_deployment: Optional[str],  # Not needed for non-Azure OpenAI or for retrieval_mode="text"
         embedding_model: str,
+        embedding_dimensions: int,
         sourcepage_field: str,
         content_field: str,
         query_language: str,
@@ -61,6 +62,7 @@ class RetrieveThenReadVisionApproach(Approach):
         self.auth_helper = auth_helper
         self.embedding_model = embedding_model
         self.embedding_deployment = embedding_deployment
+        self.embedding_dimensions = embedding_dimensions
         self.sourcepage_field = sourcepage_field
         self.content_field = content_field
         self.gpt4v_deployment = gpt4v_deployment
@@ -89,6 +91,8 @@ class RetrieveThenReadVisionApproach(Approach):
 
         use_semantic_captions = True if overrides.get("semantic_captions") and has_text else False
         top = overrides.get("top", 3)
+        minimum_search_score = overrides.get("minimum_search_score", 0.0)
+        minimum_reranker_score = overrides.get("minimum_reranker_score", 0.0)
         filter = self.build_filter(overrides, auth_claims)
         use_semantic_ranker = overrides.get("semantic_ranker") and has_text
 
@@ -107,7 +111,16 @@ class RetrieveThenReadVisionApproach(Approach):
         # Only keep the text query if the retrieval mode uses text, otherwise drop it
         query_text = q if has_text else None
 
-        results = await self.search(top, query_text, filter, vectors, use_semantic_ranker, use_semantic_captions)
+        results = await self.search(
+            top,
+            query_text,
+            filter,
+            vectors,
+            use_semantic_ranker,
+            use_semantic_captions,
+            minimum_search_score,
+            minimum_reranker_score,
+        )
 
         image_list: list[ChatCompletionContentPartImageParam] = []
         user_content: list[ChatCompletionContentPartParam] = [{"text": q, "type": "text"}]
@@ -132,11 +145,11 @@ class RetrieveThenReadVisionApproach(Approach):
 
         # Append user message
         message_builder.insert_message("user", user_content)
-
+        updated_messages = message_builder.messages
         chat_completion = (
             await self.openai_client.chat.completions.create(
                 model=self.gpt4v_deployment if self.gpt4v_deployment else self.gpt4v_model,
-                messages=message_builder.messages,
+                messages=updated_messages,
                 temperature=overrides.get("temperature", 0.3),
                 max_tokens=1024,
                 n=1,
@@ -152,12 +165,29 @@ class RetrieveThenReadVisionApproach(Approach):
             "data_points": data_points,
             "thoughts": [
                 ThoughtStep(
-                    "Search Query",
+                    "Search using user query",
                     query_text,
-                    {"use_semantic_captions": use_semantic_captions, "vector_fields": vector_fields},
+                    {
+                        "use_semantic_captions": use_semantic_captions,
+                        "use_semantic_ranker": use_semantic_ranker,
+                        "top": top,
+                        "filter": filter,
+                        "vector_fields": vector_fields,
+                    },
                 ),
-                ThoughtStep("Results", [result.serialize_for_results() for result in results]),
-                ThoughtStep("Prompt", [str(message) for message in message_builder.messages]),
+                ThoughtStep(
+                    "Search results",
+                    [result.serialize_for_results() for result in results],
+                ),
+                ThoughtStep(
+                    "Prompt to generate answer",
+                    [str(message) for message in updated_messages],
+                    (
+                        {"model": self.gpt4v_model, "deployment": self.gpt4v_deployment}
+                        if self.gpt4v_deployment
+                        else {"model": self.gpt4v_model}
+                    ),
+                ),
             ],
         }
         chat_completion["choices"][0]["context"] = extra_info

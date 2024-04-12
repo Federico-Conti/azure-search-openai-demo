@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Checkbox, Panel, DefaultButton, TextField, SpinButton, Slider } from "@fluentui/react";
-import { SparkleFilled } from "@fluentui/react-icons";
+import { BotSparkleFilled } from "@fluentui/react-icons";
 import readNDJSONStream from "ndjson-readablestream";
 
 import styles from "./Chat.module.css";
@@ -34,6 +34,8 @@ const Chat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
     const [temperature, setTemperature] = useState<number>(0.3);
+    const [minimumRerankerScore, setMinimumRerankerScore] = useState<number>(0);
+    const [minimumSearchScore, setMinimumSearchScore] = useState<number>(0);
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
     const [retrievalMode, setRetrievalMode] = useState<RetrievalMode>(RetrievalMode.Hybrid);
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
@@ -148,6 +150,8 @@ const Chat = () => {
                         exclude_category: excludeCategory.length === 0 ? undefined : excludeCategory,
                         top: retrieveCount,
                         temperature: temperature,
+                        minimum_reranker_score: minimumRerankerScore,
+                        minimum_search_score: minimumSearchScore,
                         retrieval_mode: retrievalMode,
                         semantic_ranker: useSemanticRanker,
                         semantic_captions: useSemanticCaptions,
@@ -213,6 +217,14 @@ const Chat = () => {
         setTemperature(newValue);
     };
 
+    const onMinimumSearchScoreChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
+        setMinimumSearchScore(parseFloat(newValue || "0"));
+    };
+
+    const onMinimumRerankerScoreChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
+        setMinimumRerankerScore(parseFloat(newValue || "0"));
+    };
+
     const onRetrieveCountChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
         setRetrieveCount(parseInt(newValue || "3"));
     };
@@ -274,15 +286,15 @@ const Chat = () => {
         <div className={styles.container}>
             <div className={styles.commandsContainer}>
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
-                {/* <SettingsButton className={styles.commandButton}  onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
+                {/* <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
                 <CopyrightButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
             </div>
             <div className={styles.chatRoot}>
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            {/* <SparkleFilled fontSize={"120px"} primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Chat logo" /> */}
-                            <img src="../../../public/bot.png" alt="BotICon" width={300} />
+                            <BotSparkleFilled fontSize={"160px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
+                            {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
                             <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data set</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
                             <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
@@ -350,7 +362,7 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. what can ChatIct do?)"
+                            placeholder="Type a new question (e.g. How can fix a VPN SSL handshake error?)"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                         />
@@ -396,6 +408,25 @@ const Chat = () => {
                         onChange={onTemperatureChange}
                         showValue
                         snapToStep
+                    />
+
+                    <SpinButton
+                        className={styles.chatSettingsSeparator}
+                        label="Minimum search score"
+                        min={0}
+                        step={0.01}
+                        defaultValue={minimumSearchScore.toString()}
+                        onChange={onMinimumSearchScoreChange}
+                    />
+
+                    <SpinButton
+                        className={styles.chatSettingsSeparator}
+                        label="Minimum reranker score"
+                        min={1}
+                        max={4}
+                        step={0.1}
+                        defaultValue={minimumRerankerScore.toString()}
+                        onChange={onMinimumRerankerScoreChange}
                     />
 
                     <SpinButton
