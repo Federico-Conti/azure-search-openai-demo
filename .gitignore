@@ -149,4 +149,5 @@ static/
 data/**/*.md5
 
 # Storage dataset
-*.pdf
+
+data/**/*.pdf
