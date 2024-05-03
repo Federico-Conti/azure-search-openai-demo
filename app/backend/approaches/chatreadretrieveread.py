@@ -111,7 +111,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
                         "properties": {
                             "search_query": {
                                 "type": "string",
-                                "description": "Query string to retrieve documents from azure search eg: 'Health care plan'",
+                                "description": "Query string to retrieve documents from azure search eg: 'install VPN steps'",
                             }
                         },
                         "required": ["search_query"],
