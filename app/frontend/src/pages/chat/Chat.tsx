@@ -295,9 +295,9 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"110px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"100px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data set</h1>
+                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
                             <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
                         </div>

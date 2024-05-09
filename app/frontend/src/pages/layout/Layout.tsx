@@ -14,7 +14,7 @@ const Layout = () => {
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer}>
                     <Link to="/" className={styles.headerTitleContainer}>
-                        <h3 className={styles.headerTitle}>ChatICT V3.1</h3>
+                        <h3 className={styles.headerTitle}>ChatICT V3.0</h3>
                     </Link>
                     <nav>
                         <ul className={styles.headerNavList}>
