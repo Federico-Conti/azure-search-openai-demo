@@ -147,7 +147,5 @@ node_modules
 static/
 
 data/**/*.md5
-
-# Storage dataset
-
 data/**/*.pdf
+.DS_Store
