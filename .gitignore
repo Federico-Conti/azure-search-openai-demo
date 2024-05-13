@@ -151,4 +151,4 @@ data/**/*.pdf
 .DS_Store
 
 data2/**/*.md5
-data2/**/*.pdf
+data2/**/*.txt
