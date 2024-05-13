@@ -21,10 +21,8 @@ class ChatApproach(Approach, ABC):
     ASSISTANT = "assistant"
 
     query_prompt_few_shots = [
-        {"role": USER, "content": "How can isntall a VPN?"},
-        {"role": ASSISTANT, "content": "Summarises the steps to install VPN on all the operating systems described in the user guide"},
-        {"role": USER, "content": "?"},
-        {"role": ASSISTANT, "content": "Shows the names of the operating systems described in the user guide"},
+        {"role": USER, "content": "Can you create a diagram for me that summarizes the content of the document?"},
+        {"role": ASSISTANT, "content": "Generate a dot graphviz code that respod to the question"},
     ]
     NO_RESPONSE = "0"
 
