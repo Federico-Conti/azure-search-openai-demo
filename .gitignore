@@ -149,3 +149,6 @@ static/
 data/**/*.md5
 data/**/*.pdf
 .DS_Store
+
+data2/**/*.md5
+data2/**/*.txt
