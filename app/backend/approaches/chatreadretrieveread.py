@@ -125,26 +125,47 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         use_semantic_ranker = True if overrides.get("semantic_ranker") and has_text else False
 
         original_user_query = history[-1]["content"]
-        user_query_request = "Generate search query for: " + original_user_query
+        user_query_request = "Generate ENGLISH search query to retrieve documents from azure search and Individual Language for: " + original_user_query
 
         tools: List[ChatCompletionToolParam] = [
-            {
+            # {
+            #     "type": "function",
+            #     "function": {
+            #         "name": "search_sources",
+            #         "description": "Retrieve sources from the Azure AI Search index and individuate a query language",
+            #         "parameters": {
+            #             "type": "object",
+            #             "properties": {
+            #                 "search_query": {
+            #                     "type": "string",
+            #                     "description": "Query string to retrieve documents from azure search eg: 'install VPN steps, German'",
+            #                 }
+            #             },
+            #             "required": ["search_query"],
+            #         },
+            #     },
+            # },
+             {
                 "type": "function",
                 "function": {
                     "name": "search_sources",
-                    "description": "Retrieve sources from the Azure AI Search index",
+                    "description": "Retrieve sources from the Azure AI Search index and individuate a query language",
                     "parameters": {
                         "type": "object",
                         "properties": {
                             "search_query": {
                                 "type": "string",
-                                "description": "Query string to retrieve documents from azure search eg: 'install VPN steps'",
+                                "description": "English query string to retrieve documents from azure search e.g.: 'install VPN steps, German'",
+                            },
+                            "query_lnaguage": {
+                                "type": "string",
+                                "description": "Language used by the user to ask the question e.g.: 'German'",
                             }
-                        },
-                        "required": ["search_query"],
-                    },
                 },
-            }
+                "required": ["search_query","query_lnaguage"]
+            },
+        }
+    },
         ]
 
         # STEP 1: Generate an optimized keyword search query based on the chat history and the last question
@@ -165,11 +186,13 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             max_tokens=100,  # Setting too low risks malformed JSON, setting too high may affect performance
             n=1,
             tools=tools,
-            tool_choice="auto",
+            tool_choice={"type": "function", "function": {"name": "search_sources"}}
         )
 
-        query_text = self.get_search_query(chat_completion, original_user_query)
-
+        query_clean = self.get_search_query(chat_completion, original_user_query)
+        query_text = query_clean[0]
+        query_language = query_clean[1]
+    
         # STEP 2: Retrieve relevant documents from the search index with the GPT optimized query
 
         # If retrieval mode includes vectors, compute an embedding for the query
@@ -203,14 +226,14 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             self.follow_up_questions_prompt_content if overrides.get("suggest_followup_questions") else "",
         )
 
-        response_token_limit = 1024
+        response_token_limit = 500 #1024
         messages_token_limit = self.chatgpt_token_limit - response_token_limit
         messages = self.get_messages_from_history(
             system_prompt=system_message,
             model_id=self.chatgpt_model,
             history=history,
             # Model does not handle lengthy system messages well. Moving sources to latest user conversation to solve follow up questions prompt.
-            user_content=original_user_query + "\n\nSources:\n" + content,
+            user_content= "Answer in " + query_language + "\n\n" + query_text + "\n\nSources:\n" + content, #non passo la query originale ma quella pulita
             max_tokens=messages_token_limit,
         )
 

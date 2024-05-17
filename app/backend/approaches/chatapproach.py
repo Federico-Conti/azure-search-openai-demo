@@ -36,13 +36,15 @@ class ChatApproach(Approach, ABC):
     """
 
     query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base.
-    You have access to Azure AI Search index with 100's of documents.
+    You have access to Azure AI Search index with 57's of documents.
+    Identify the language query and write the identified language. (e.g. German)
     Generate a search query based on the conversation and the new question.
+    If the question is not in English, translate the question to English before generating the search query.
     Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
     Do not include any text inside [] or <<>> in the search query terms.
     Do not include any special characters like '+'.
-    If the question is not in English, translate the question to English before generating the search query.
-    If you cannot generate a search query, return just the number 0.
+    If you cannot generate a search query, return just the number 0 or an empty stringh.
+    
     """
 
     @property
@@ -77,13 +79,14 @@ class ChatApproach(Approach, ABC):
                 if function.name == "search_sources":
                     arg = json.loads(function.arguments)
                     search_query = arg.get("search_query", self.NO_RESPONSE)
-                    if search_query != self.NO_RESPONSE:
-                        return search_query
+                    query_lnaguage = arg.get("query_lnaguage", self.NO_RESPONSE)
+                    if search_query != self.NO_RESPONSE and search_query != self.NO_RESPONSE:
+                        return (search_query,query_lnaguage)
         elif query_text := response_message.content:
             if query_text.strip() != self.NO_RESPONSE:
                 return query_text
-        return user_query
-
+        return (search_query, "English")
+        
     def extract_followup_questions(self, content: str):
         return content.split("<<")[0], re.findall(r"<<([^>>]+)>>", content)
 
