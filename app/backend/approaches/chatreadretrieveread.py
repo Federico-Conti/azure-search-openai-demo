@@ -131,7 +131,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
                         "properties": {
                             "search_query": {
                                 "type": "string",
-                                "description": "English query string to retrieve documents from azure search e.g.: 'install VPN steps, German'",
+                                "description": "English query string to retrieve documents from azure search e.g.: 'install VPN steps'",
                             },
                             "query_lnaguage": {
                                 "type": "string",
