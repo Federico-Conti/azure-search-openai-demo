@@ -55,7 +55,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
     @property
     def system_message_chat_conversation(self):
         return """You are a multimodal document assistant. your name is MMRag.
-                You can access to the italian parliament auditions video recording documents with this structure:
+                You can access to the parliament auditions video recording documents with this structure:
                 The context of the document is auditions in the italian parliament, 
                 where people are called to testify and provide information on a specific topic.
                 Usually a commission of deputies or senators asks questions to the person being auditioned,
@@ -128,23 +128,6 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         user_query_request = "Generate ENGLISH search query to retrieve documents from azure search and Individual Language for: " + original_user_query
 
         tools: List[ChatCompletionToolParam] = [
-            # {
-            #     "type": "function",
-            #     "function": {
-            #         "name": "search_sources",
-            #         "description": "Retrieve sources from the Azure AI Search index and individuate a query language",
-            #         "parameters": {
-            #             "type": "object",
-            #             "properties": {
-            #                 "search_query": {
-            #                     "type": "string",
-            #                     "description": "Query string to retrieve documents from azure search eg: 'install VPN steps, German'",
-            #                 }
-            #             },
-            #             "required": ["search_query"],
-            #         },
-            #     },
-            # },
              {
                 "type": "function",
                 "function": {
@@ -155,7 +138,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
                         "properties": {
                             "search_query": {
                                 "type": "string",
-                                "description": "English query string to retrieve documents from azure search e.g.: 'install VPN steps, German'",
+                                "description": "English query string to retrieve documents from azure search e.g.: 'main actors in Indagine conoscitiva Intelligenza artificiale'",
                             },
                             "query_lnaguage": {
                                 "type": "string",

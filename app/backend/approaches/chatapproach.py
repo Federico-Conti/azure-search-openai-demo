@@ -21,8 +21,10 @@ class ChatApproach(Approach, ABC):
     ASSISTANT = "assistant"
 
     query_prompt_few_shots = [
-        {"role": USER, "content": "Can you create a diagram for me that summarizes the content of the document?"},
-        {"role": ASSISTANT, "content": "Generate a dot graphviz code that respod to the question"},
+        {"role": USER, "content": "main actors in Indagine conoscitiva Intelligenza artificiale"},
+        {"role": ASSISTANT, "content": "List the main topics described in 'Indagine conoscitiva Intelligenza artificiale' document"},
+        {"role": USER, "content": "main characters in the document?"},
+        {"role": ASSISTANT, "content": "List the main characters described in 'Indagine conoscitiva Intelligenza artificiale' document"},
     ]
     NO_RESPONSE = "0"
 
@@ -39,12 +41,11 @@ class ChatApproach(Approach, ABC):
     You have access to Azure AI Search index with 57's of documents.
     Identify the language query and write the identified language. (e.g. German)
     Generate a search query based on the conversation and the new question.
+    If the user does not specify the name of the document, retrieves the document name from the previous conversation  (e.g main characters in the 'Indagine conoscitiva Intelligenza artificiale')
     If the question is not in English, translate the question to English before generating the search query.
-    Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
     Do not include any text inside [] or <<>> in the search query terms.
     Do not include any special characters like '+'.
     If you cannot generate a search query, return just the number 0 or an empty stringh.
-    
     """
 
     @property
