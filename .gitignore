@@ -146,8 +146,9 @@ npm-debug.log*
 node_modules
 static/
 
-data/**/*.md5
-data/**/*.pdf
+data*/**/*.md5
+data*/**/*.pdf
+data*/**/*.txt
 .DS_Store
 
 data2/**/*.md5
