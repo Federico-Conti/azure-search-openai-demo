@@ -23,7 +23,7 @@ import { UserChatMessage } from "../../components/UserChatMessage";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton";
 import { CopyrightButton } from "../../components/CopyrightButton";
-import { DocumentList } from "../../components/DocumentList";
+import { DocumentList } from "../../components/DocumentList"; //ICT_PATCH/ICT_Knowledge_Scope
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { UploadFile } from "../../components/UploadFile";
 import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
@@ -290,7 +290,7 @@ const Chat = () => {
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
                 {showUserUpload && <UploadFile className={styles.commandButton} disabled={!isLoggedIn(client)} />}
                 <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
-                <DocumentList className={styles.commandButton} onClick={() => null} />
+                <DocumentList className={styles.commandButton} />
                 <CopyrightButton className={styles.commandButton} onClick={() => null} disabled={true} />
             </div>
             <div className={styles.chatRoot}>

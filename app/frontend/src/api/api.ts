@@ -92,3 +92,17 @@ export async function listUploadedFilesApi(idToken: string): Promise<string[]> {
     const dataResponse: string[] = await response.json();
     return dataResponse;
 }
+
+//ICT_PATCH/ICT_Knowledge_Scope
+export async function listUploadedFilesApiICTkb(): Promise<string[]> {
+    const response = await fetch(`/list_uploadedICTkb`, {
+        method: "GET"
+    });
+
+    if (!response.ok) {
+        throw new Error(`Listing files failed: ${response.statusText}`);
+    }
+
+    const dataResponse: string[] = await response.json();
+    return dataResponse;
+}

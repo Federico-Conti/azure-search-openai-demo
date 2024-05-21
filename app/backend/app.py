@@ -295,6 +295,19 @@ async def list_uploaded(auth_claims: dict[str, Any]):
             current_app.logger.exception("Error listing uploaded files", error)
     return jsonify(files), 200
 
+#ICT_PATCH/ICT_Knowledge_Scope
+@bp.get("/list_uploadedICTkb")
+async def list_uploadedICTkb():
+    blob_container_client: ContainerClient = current_app.config[CONFIG_BLOB_CONTAINER_CLIENT]
+    blob_list = blob_container_client.list_blobs()
+    files=[]
+    try:
+        async for blob in blob_list:
+            files.append(blob.name)
+    except ResourceNotFoundError as error:
+        if error.status_code != 404:
+            current_app.logger.exception("Error listing uploaded files", error)
+    return jsonify(files), 200
 
 @bp.before_app_serving
 async def setup_clients():
