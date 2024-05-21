@@ -23,6 +23,7 @@ import { UserChatMessage } from "../../components/UserChatMessage";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton";
 import { CopyrightButton } from "../../components/CopyrightButton";
+import { DocumentList } from "../../components/DocumentList";
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { UploadFile } from "../../components/UploadFile";
 import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
@@ -289,15 +290,16 @@ const Chat = () => {
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
                 {showUserUpload && <UploadFile className={styles.commandButton} disabled={!isLoggedIn(client)} />}
                 <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
-                <CopyrightButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
+                <DocumentList className={styles.commandButton} onClick={() => null} />
+                <CopyrightButton className={styles.commandButton} onClick={() => null} disabled={true} />
             </div>
             <div className={styles.chatRoot}>
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"110px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"100px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data set</h1>
+                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
                             <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
                         </div>
