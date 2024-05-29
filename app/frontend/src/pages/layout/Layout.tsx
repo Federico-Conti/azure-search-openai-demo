@@ -15,6 +15,7 @@ const Layout = () => {
                 <div className={styles.headerContainer}>
                     <Link to="/" className={styles.headerTitleContainer}>
                         <h3 className={styles.headerTitle}>ChatICT V3.0</h3>
+                        <p className={styles.headersubTitle}>AI-generated answer</p>
                     </Link>
                     <nav>
                         <ul className={styles.headerNavList}>
@@ -42,7 +43,7 @@ const Layout = () => {
                             </li> */}
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText}>AI-generated answer</h4>
+                    {/* <h4 className={styles.headerRightText}>AI-generated answer</h4> */}
                     {useLogin && <LoginButton />}
                 </div>
             </header>

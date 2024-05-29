@@ -15,10 +15,11 @@
     justify-content: space-around;
     margin-right: 12px;
     margin-left: 12px;
+    line-height: 0.35;
 }
 
 .headerTitleContainer {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     margin-right: 40px;
     color: #f2f2f2;
@@ -32,6 +33,12 @@
 .headerTitle {
     margin-left: 12px;
     font-weight: 600;
+}
+
+.headersubTitle {
+    font-weight: 300;
+    font-size: smaller;
+    margin-left: 10px;
 }
 
 .headerNavList {

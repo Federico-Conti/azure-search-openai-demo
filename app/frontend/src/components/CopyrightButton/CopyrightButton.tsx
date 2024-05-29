@@ -13,7 +13,7 @@ export const CopyrightButton = ({ className, disabled, onClick }: Props) => {
     return (
         <div className={`${styles.container} ${className ?? ""}`}>
             <Button icon={<CodeBlockRegular fontFamily="" primaryFill={"rgba(200, 0, 0)"} />} disabled={disabled} onClick={onClick}>
-                {"ICT Directorate"}
+                {"by ICT Directorate"}
             </Button>
         </div>
     );
