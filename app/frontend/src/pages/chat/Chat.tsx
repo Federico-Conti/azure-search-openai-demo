@@ -290,7 +290,7 @@ const Chat = () => {
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
                 {showUserUpload && <UploadFile className={styles.commandButton} disabled={!isLoggedIn(client)} />}
                 {/* <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
-                <DocumentList className={styles.commandButton} onClick={() => null} />
+                <DocumentList className={styles.commandButton} />
                 <CopyrightButton className={styles.commandButton} onClick={() => null} disabled={true} />
             </div>
             <div className={styles.chatRoot}>
