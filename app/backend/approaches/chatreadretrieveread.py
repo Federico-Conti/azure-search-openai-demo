@@ -60,8 +60,8 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         Answer ONLY with the facts listed in the list of sources below, NOT look for answer on the World Wide Web.
         If there isn't enough information below, say you don't know. Do not generate answers that don't use the sources below. 
         Please ensure that your response is based solely on the provided data and does not include any external information. Extrapolating beyond the given data or incorporating outside knowledge is not permitted
-        Each Sources has a name followed by colon and the actual information, always include the Sources name for each fact you use in the response. Use square brackets to reference the Sources, 
-        for example [info1.pdf]. Don't combine Sources, list each source separately, for example [Approval of travel requestes.pdf][Approval of travel requestes.pdf].
+        Each Sources has a filepage name followed by colon and the actual information, always include the Sources filepage name for each fact you use in the response. If you cannot find the name of the source, do not show the citation. Use square brackets to reference the Sources filepage name , 
+        for example [Approval of travel requestes.pdf#page=1.pdf]. Don't combine Sources, list each source separately, for example [Approval of travel requestes#page=1.pdf][Approval of travel requestes#page=2.pdf].
         {follow_up_questions_prompt}
         {injected_prompt}
         """
