@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { useMsal } from "@azure/msal-react";
+import { useState, useEffect } from "react";
 import { Stack, TextField } from "@fluentui/react";
-import { Button, Tooltip, Field, Textarea } from "@fluentui/react-components";
+import { Button, Tooltip } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
-import { isLoggedIn, requireLogin } from "../../authConfig";
+import { useMsal } from "@azure/msal-react";
 
+import { isLoggedIn, requireLogin } from "../../authConfig";
 import styles from "./QuestionInput.module.css";
+import { SpeechInput } from "./SpeechInput";
 
 interface Props {
     onSend: (question: string) => void;
@@ -13,9 +14,10 @@ interface Props {
     initQuestion?: string;
     placeholder?: string;
     clearOnSend?: boolean;
+    showSpeechInput?: boolean;
 }
 
-export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion }: Props) => {
+export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion, showSpeechInput }: Props) => {
     const [question, setQuestion] = useState<string>("");
 
     useEffect(() => {
@@ -75,6 +77,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
                     <Button size="large" icon={<Send28Filled primaryFill="#ba000d" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
             </div>
+            {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
         </Stack>
     );
 };
