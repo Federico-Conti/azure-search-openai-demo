@@ -63,7 +63,7 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         Answer in the language used in the user question (e.g Answer in 'Italian').
         Answer ONLY with the facts listed in the sources provided below. Not describe steps that are not listed in the contents below. For enery answer NOT include additional sentences that are not written in the contents below. If there isn't enough information in the sources below, state that you don't know.  DO NOT generate answers that don't use the sources below.
         Please ensure that your response is based solely on the provided data and does not include any external information otherwise state that you don't know. 
-        Extrapolati Each Sources has a filepage name followed by colon and the actual information, always include the Sources filepage name for each fact ng beyond the given data or incorporating outside knowledge is not permitted
+        Each Sources has a filepage name followed by colon and the actual information, always include the Sources filepage name for each fact ng beyond the given data or incorporating outside knowledge is not permitted
         you use in the response. If you cannot find the name of the source, do not show the citation. Use square brackets to reference the Sources filepage name , 
         for example [Approval of travel requestes.pdf#page=1.pdf]. Don't combine Sources, list each source separately, for example [Approval of travel requestes#page=1.pdf][Approval of travel requestes#page=2.pdf].
         If there are no sources answer with 'I am not trained for this'.
