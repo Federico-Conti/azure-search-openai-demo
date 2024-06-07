@@ -1,0 +1,61 @@
+.formBody {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    margin-bottom: 300px;
+}
+
+@media only screen and (max-height: 780px) {
+    .formBody {
+        width: 500px;
+        height: 100px;
+        display: flex;
+        position: relative;
+        margin: auto;
+        bottom: 150px;
+    }
+}
+
+.formContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px;
+    transition: all 0.2s ease-in;
+}
+
+.formElement {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-bottom: 10px;
+}
+
+.formElement input,
+textarea {
+    padding: 8px;
+    border-radius: 10px;
+    border: 2px solid black;
+    resize: none;
+}
+
+.formButton {
+    width: 100px;
+    padding: 10px;
+    margin-left: auto;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-in;
+}
+
+.formButton:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transform: translateX(-5px) translateY(-5px);
+}
