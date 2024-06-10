@@ -2,7 +2,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    margin-bottom: 300px;
+    margin: auto;
 }
 
 @media only screen and (max-height: 780px) {
