@@ -19,6 +19,26 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion, showSpeechInput }: Props) => {
     const [question, setQuestion] = useState<string>("");
+    const { instance } = useMsal(); //ICT_PATCH/automate_metric_log (era riga 73)
+    const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_metric_log
+
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UserQuery: question, UserEmail: activeAccount?.username })
+    };
+
+    //FlowName: ChatICTV3:Log_AddUserQuery
+    async function SendUserQueryToAutomateFlow(): Promise<string> {
+        const response = await fetch(
+            "https://prod-66.westeurope.logic.azure.com:443/workflows/f75884186a1342abae5d51041a04a9d6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yBH14qZDakJDfcMlsacg0WDLIi0PRPe29ZU9leFnRG0",
+            requestOptions
+        );
+        if (!response.ok) {
+            throw new Error(`automate response was not ok: ${response.status}`);
+        }
+        return await response.json();
+    }
 
     useEffect(() => {
         initQuestion && setQuestion(initQuestion);
@@ -28,7 +48,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         if (disabled || !question.trim()) {
             return;
         }
-
+        SendUserQueryToAutomateFlow(); //ICT_PATCH/automate_metric_log
         onSend(question);
 
         if (clearOnSend) {
@@ -51,7 +71,6 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         }
     };
 
-    const { instance } = useMsal();
     const disableRequiredAccessControl = requireLogin && !isLoggedIn(instance);
     const sendQuestionDisabled = disabled || !question.trim() || requireLogin;
 
