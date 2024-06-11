@@ -7,6 +7,7 @@ import { useMsal } from "@azure/msal-react";
 import { isLoggedIn, requireLogin } from "../../authConfig";
 import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
+import { appServicesToken, appServicesLogout } from "../../authConfig"; //ICT_PATCH/automate_query_log
 
 interface Props {
     onSend: (question: string) => void;
@@ -19,13 +20,13 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion, showSpeechInput }: Props) => {
     const [question, setQuestion] = useState<string>("");
-    const { instance } = useMsal(); //ICT_PATCH/automate_metric_log (era riga 73)
-    const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_metric_log
+    const { instance } = useMsal(); //ICT_PATCH/automate_query_log (era riga 73)
+    const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_query_log
 
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UserQuery: question, UserEmail: activeAccount?.username })
+        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
     };
 
     //FlowName: ChatICTV3:Log_AddUserQuery
@@ -48,7 +49,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         if (disabled || !question.trim()) {
             return;
         }
-        SendUserQueryToAutomateFlow(); //ICT_PATCH/automate_metric_log
+        SendUserQueryToAutomateFlow(); //ICT_PATCH/automate_query_log
         onSend(question);
 
         if (clearOnSend) {
