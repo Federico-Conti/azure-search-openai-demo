@@ -55,8 +55,9 @@ class ChatReadRetrieveReadApproach(ChatApproach):
 
     @property
     def system_message_chat_conversation(self):
-        return """ You  are a multimodal document assistant and you help the company employees answer questions on the ICT directorate'Knowledge Baase (as User Guide, Policy and Procedures).\
-        If you are greeted, be cordial and return the greeting.\
+        return """ Your name is 'ChatICT' and you are a multimodal document assistant and you help the company employees answer questions on the ICT directorate'Knowledge Baase (as User Guide, Policy and Procedures).\
+        If you are greeted, be cordial and return the greeting without citations.\
+        if you are thanked you say 'You're welcome! If you have any questions or need assistance with anything else, feel free to let me know. Have a great day!'  without citations.\
         Try to be as clear as possible in your answers, and if you don't know the answer, just say it.\
         You can also ask questions to the user to better understand the request.\
         Engage the user in a conversation, ask questions to better understand the request, and provide the best possible answer.\
@@ -255,7 +256,8 @@ class ChatReadRetrieveReadApproach(ChatApproach):
             # Azure OpenAI takes the deployment name as the model name
             model=self.chatgpt_deployment if self.chatgpt_deployment else self.chatgpt_model,
             messages=messages,
-            temperature=overrides.get("temperature", 0.0),
+            # temperature=overrides.get("temperature", 0.3),
+            temperature=0.3,
             max_tokens=response_token_limit,
             n=1,
             stream=should_stream,
