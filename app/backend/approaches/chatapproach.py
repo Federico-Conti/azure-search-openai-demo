@@ -10,10 +10,7 @@ from approaches.approach import Approach
 
 class ChatApproach(Approach, ABC):
     query_prompt_few_shots: list[ChatCompletionMessageParam] = [
-        {"role": "user", "content": "What can you do?"},
-        {"role": "assistant", "content": "I'am ChatICT and can answer questions about the ICT directorate's knowledge base, such as Policies, Procedures User Guides. How can I help you?."},
-        {"role": "user", "content": "Can you find the information on the WWW?"},
-        {"role": "assistant", "content": "No sorry, I was trained with  ICT directorate's documentation."},
+
     ]
     NO_RESPONSE = "0"
 
