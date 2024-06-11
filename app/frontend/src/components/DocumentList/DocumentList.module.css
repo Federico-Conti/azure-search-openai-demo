@@ -18,7 +18,33 @@
     line-height: 90%;
 }
 
+.documentlist_li {
+    cursor: pointer;
+}
+
+.documentlist_li:hover {
+    color: blue;
+    content: "Sta caricando";
+}
+
+.documentlist_li:active {
+    color: red;
+    font-weight: 600;
+}
+
 .documentlist_counter {
     margin: 10px;
     font-weight: 500;
+}
+
+.documentlist_citationcontainer {
+    background-color: rgb(255, 165, 0);
+    position: absolute;
+    align-items: center;
+    z-index: 2;
+    border: 3px solid rgb(0, 0, 0);
+}
+
+.documentlist_citationcontent {
+    height: 700px;
 }
