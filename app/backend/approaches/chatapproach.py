@@ -22,17 +22,14 @@ class ChatApproach(Approach, ABC):
     Do no repeat questions that have already been asked.
     Make sure the last question ends with ">>".
     """
-
-    query_prompt_template = """Below is a history of the conversation so far, and a new question asked by the user that needs to be answered by searching in a knowledge base.
-    You have access to Azure AI Search index with 57's of documents.
+    
+    query_prompt_template = """
     Identify the language query and write the identified language. (e.g. German)
-    Generate a search query based on the conversation and the new question.
     If the question is not in English, translate the question to English before generating the search query.
     Do not include cited source filenames and document names e.g info.txt or doc.pdf in the search query terms.
     Do not include any text inside [] or <<>> in the search query terms.
     Do not include any special characters like '+'.
     If you cannot generate a search query, return just the number 0 or an empty stringh.
-    
     """
 
     @property
