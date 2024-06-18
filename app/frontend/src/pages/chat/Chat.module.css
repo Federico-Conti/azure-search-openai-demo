@@ -118,6 +118,8 @@
 }
 
 .commandsContainer {
+    position: sticky;
+    top: 0;
     display: flex;
     align-self: flex-end;
 }
