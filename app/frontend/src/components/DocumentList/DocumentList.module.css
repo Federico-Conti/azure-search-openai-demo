@@ -48,3 +48,15 @@
 .documentlist_citationcontent {
     height: 700px;
 }
+
+.documentlist_dismiss {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.documentlist_dismiss:hover {
+    font-size: 40px;
+}
