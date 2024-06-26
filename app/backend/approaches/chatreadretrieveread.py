@@ -72,7 +72,12 @@ class ChatReadRetrieveReadApproach(ChatApproach):
         Focus primarily on the content of the surces, and use the question to better understand the context.\
         If there isn't enough information in the sources below, say "i'm sorry, but I couldn't find any information. If you need assistance, you can open a ticket by following this link: https://ictsupport.iit.it/.\
         Please ensure that your response is based solely on the sources provided data and does not include any external information otherwise state that you don't know. 
-        Each source has a name followed by colon and the actual information, always include the source name for each fact you use in the response. Use square brackets to reference the source, for example [info1.txt]. Don't combine sources, list each source separately, for example [info1.txt][info2.pdf]
+        Each source has a name followed by colon and the actual information:
+        - Always include the source name for each fact you use in the response (step-by-step).
+        - Use square brackets to reference the source, for example [info1.txt]. 
+        - Don't combine sources, list each source separately, for example [info1.txt][info2.pdf] 
+        - Do not include source name at the end of the answer but only at the end of each line (step-by-step).
+        - Do not include url as source name (e.g https://).
         {follow_up_questions_prompt}
         {injected_prompt}
         """
