@@ -98,6 +98,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
                 </Tooltip>
             </div>
             {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
+            {/* Aggiunto Allert per informare l'utente che il chatbot può fare errori */}
+            <div className={styles.questionInputAllert}>
+                <p className={styles.questionInputAllertText}>ChatICT can make mistakes. Check important info.</p>
+            </div>
         </Stack>
     );
 };
