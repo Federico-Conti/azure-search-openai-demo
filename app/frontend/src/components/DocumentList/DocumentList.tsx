@@ -5,6 +5,7 @@ import { Callout, Label, Text } from "@fluentui/react";
 import { Button } from "@fluentui/react-components";
 import { FolderFilled } from "@fluentui/react-icons";
 import { SparkleFilled } from "@fluentui/react-icons";
+import { DismissSquareRegular } from "@fluentui/react-icons";
 import { Stack, Pivot, PivotItem } from "@fluentui/react";
 import { useMsal } from "@azure/msal-react";
 import { useLogin, getToken } from "../../authConfig";
@@ -68,7 +69,7 @@ export const DocumentList = ({ className }: Props) => {
     return (
         <div className={`${styles.container} ${className ?? ""}`}>
             <Button icon={<FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} />} onClick={handleButtonClick}>
-                {"Document List"}
+                {"Knowledge Scope"}
             </Button>
 
             {isCalloutVisible && (
@@ -82,8 +83,16 @@ export const DocumentList = ({ className }: Props) => {
                     }}
                     setInitialFocus
                 >
+                    <DismissSquareRegular
+                        fontSize={"35px"}
+                        primaryFill={"rgba(200, 0, 0)"}
+                        className={styles.documentlist_dismiss}
+                        onClick={() => {
+                            setIsCalloutVisible(false);
+                        }}
+                    ></DismissSquareRegular>
                     <h3 className={styles.documentlist_KnowledgeTitle}>
-                        Knowledge Scope <SparkleFilled fontSize={"30px"} primaryFill={"rgb(255, 165, 0)"} />{" "}
+                        Knowledge Scope <SparkleFilled fontSize={"30px"} primaryFill={"rgb(255, 165, 0)"} />
                     </h3>
                     {isLoading && <h4 className={styles.documentlist_loading}>Loading...</h4>}
                     <div className={styles.documentlist_counter}>
