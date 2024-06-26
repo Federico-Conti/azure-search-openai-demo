@@ -1,8 +1,12 @@
-import { makeStyles, Body1, Caption1, Button } from "@fluentui/react-components";
+import { makeStyles, Body1, Caption1, Button, Divider } from "@fluentui/react-components";
 import { ArrowReplyRegular, ArrowForwardFilled } from "@fluentui/react-icons";
 import { Card, CardFooter, CardHeader, CardPreview } from "@fluentui/react-components";
 import { BotSparkleFilled } from "@fluentui/react-icons";
-import React, { useState, ChangeEvent } from "react";
+import { DeleteFilled } from "@fluentui/react-icons";
+import { FolderFilled } from "@fluentui/react-icons";
+import { ClipboardBulletListLtrRegular } from "@fluentui/react-icons";
+import style from "./AboutCard.module.css";
+import React, { useState, ChangeEvent, useEffect } from "react";
 
 const resolveAsset = (asset: string) => {
     const ASSET_URL = "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react-components/react-card/stories/src/assets/";
@@ -20,54 +24,130 @@ const useStyles = makeStyles({
 export const AboutCard = () => {
     const styles = useStyles();
     const [showCard1, setShowCard1] = useState<boolean>(true);
+    const [showCard2, setShowCard2] = useState<boolean>(false);
+    const [counter, setCounter] = useState<number>(0);
+    const [title, setTitle] = useState<string>("");
 
-    const sendNext = () => () => setShowCard1(true);
+    useEffect(() => {
+        if (counter === 0) {
+            setTitle("Introduction");
+            setShowCard1(true);
+            setShowCard2(false);
+        } else if (counter === 1) {
+            setTitle("UI Description");
+            setShowCard1(false);
+            setShowCard2(true);
+        }
+    }, [counter]);
+
     return (
         <Card className={styles.card}>
             <CardHeader
-                image={<BotSparkleFilled fontSize={"50px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />}
+                image={<BotSparkleFilled fontSize={"40px"} primaryFill={""} aria-hidden="true" aria-label="Chat logo" />}
                 header={
                     <Body1>
                         <b>ChatICT</b> mentioned you
                     </Body1>
                 }
-                description={<Caption1>5h ago · About me - Description</Caption1>}
+                description={
+                    <Caption1>
+                        About me - <strong>{title}</strong>
+                    </Caption1>
+                }
             />
 
             {showCard1 && (
                 <CardPreview style={{ margin: "10px" }}>
                     <div>
                         <p>
-                            Applying our expertise around Large Language Models and leveraging Retrieval Augmented Generation approach (RAG), we have realized a
-                            first pilot of a chatbot (ChatICT) that we are glad to offer as a frontline point of contact for our ICT Service Desk.
+                            Applying our expertise around Large Language Models, we have realized a sample application for the Retrieval-Augmented Generation
+                            pattern running in Azure, using Azure AI Search for retrieval and Azure OpenAI large language models to power ChatGPT-style and Q&A
+                            experiences.
                         </p>
                         <p>
-                            Our ChatICT POC complements a traditional virtual assistant with Generative AI technology (gpt3.5 model with Hybrid search). This
-                            way, it combines ICT service knowledge stored in our policies, procedures, and user guides with our experience on user interaction.
+                            ChatICT is an initial POC application that integrates a Generative AI technology with ICT service knowledge stored in our policies,
+                            procedures, and user guides providing an interactive experience that efficiently retrieves answers from documents.
                         </p>
-                        ChatICT is also accessible through the IIT MS-Teams platform and is able to do the following:
+                        V3.0 features:
                         <ul>
                             <li>
-                                <strong style={{ fontWeight: "bolder" }}>Text Analyses</strong>: ChatICT can analyze what the user writes to determine their
-                                requests and questions.
+                                <p>
+                                    <strong style={{ fontWeight: "bolder" }}>Text Analyses</strong>: ChatICT analyzes user inputs to identify their requests and
+                                    questions, ensuring that responses are adapt to the appropriate context and language.
+                                </p>
                             </li>
                             <li>
-                                <strong style={{ fontWeight: "bolder" }}> Generative Answers based on Keyword Search</strong>: ChatICT extracts and collects
-                                relevant information from the knowledge base of the Information Communication Technology Directorate (User Guides, Policy, and
-                                Procedures){" "}
+                                <p>
+                                    <strong style={{ fontWeight: "bolder" }}> Hybrid Search</strong>: ChatICT extracts and collects relevant information from
+                                    the knowledge base of the Information Communication Technology Directorate (User Guides, Policy, and Procedures) using
+                                    advanced vector search algorithms.
+                                </p>
                             </li>
                             <li>
-                                <strong style={{ fontWeight: "bolder" }}>LLM</strong> ChatICT uses API calls to interact with an Azure OpenAI endpoint
-                                instantiated in Switzerland, on which the GPT-35-Turbo model has been deployed.
+                                <p>
+                                    <strong style={{ fontWeight: "bolder" }}>Generative Answers</strong> ChatICT uses GPT-3.5-turbo model calls to provide
+                                    answers based on the retrieved documents and the user's query history.
+                                </p>
                             </li>
                         </ul>
                     </div>
                 </CardPreview>
             )}
 
+            {showCard2 && (
+                <CardPreview style={{ margin: "10px" }}>
+                    <ul style={{ listStyleType: "none" }}>
+                        <li>
+                            <p>
+                                <DeleteFilled primaryFill={"rgb(66, 73, 73)"} fontSize={"22px"} />
+                                Clear button <br />
+                                <br /> Clear Chat History <br />
+                                <i style={{ fontSize: "16px", fontFamily: "italic" }}>
+                                    (Ensure you clear the history before addressing a new argument for a cleaner response)
+                                </i>
+                            </p>
+                        </li>
+                        <li>
+                            <Divider />
+                            <p>
+                                <FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} fontSize={"22px"} />
+                                Knwoledge Scope <br /> <br /> When selecting 'Knowledge scope,' all files that can be retrieved from the model will be listed.
+                            </p>
+                        </li>
+                        <li>
+                            <Divider />
+                            <p>
+                                <span style={{ fontWeight: "600" }}>Citations: </span>
+                                <span className={style.aboutCard_citation}>1. This is a citation</span>
+                                <br /> <br />
+                                Within the response, there will be a clickable link to the reference file.
+                            </p>
+                        </li>
+                    </ul>
+                </CardPreview>
+            )}
+
             <CardFooter style={{ marginLeft: "auto" }}>
-                <Button icon={<ArrowReplyRegular fontSize={40} />}></Button>
-                <Button icon={<ArrowForwardFilled fontSize={40} />} onClick={sendNext()}></Button>
+                <Button
+                    icon={
+                        <ArrowReplyRegular
+                            fontSize={40}
+                            onClick={() => {
+                                counter > 0 ? setCounter(counter - 1) : setCounter(counter);
+                            }}
+                        />
+                    }
+                ></Button>
+                <Button
+                    icon={
+                        <ArrowForwardFilled
+                            fontSize={40}
+                            onClick={() => {
+                                counter < 1 ? setCounter(counter + 1) : setCounter(counter);
+                            }}
+                        />
+                    }
+                ></Button>
             </CardFooter>
         </Card>
     );
