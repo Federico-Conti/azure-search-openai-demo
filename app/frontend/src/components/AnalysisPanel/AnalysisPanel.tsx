@@ -72,6 +72,7 @@ export const AnalysisPanel = ({ answer, activeTab, activeCitation, citationHeigh
 
     return (
         <Pivot
+            style={{ position: "sticky", top: "0", marginTop: "10px" }}
             className={className}
             selectedKey={activeTab}
             onLinkClick={pivotItem => pivotItem && onActiveTabChanged(pivotItem.props.itemKey! as AnalysisPanelTabs)}

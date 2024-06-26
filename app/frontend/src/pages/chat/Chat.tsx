@@ -45,7 +45,7 @@ const Chat = () => {
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
     const [retrievalMode, setRetrievalMode] = useState<RetrievalMode>(RetrievalMode.Hybrid);
     const [useSemanticRanker, setUseSemanticRanker] = useState<boolean>(true);
-    const [shouldStream, setShouldStream] = useState<boolean>(false);
+    const [shouldStream, setShouldStream] = useState<boolean>(true);
     const [useSemanticCaptions, setUseSemanticCaptions] = useState<boolean>(false);
     const [excludeCategory, setExcludeCategory] = useState<string>("");
     const [useSuggestFollowupQuestions, setUseSuggestFollowupQuestions] = useState<boolean>(false);
@@ -343,7 +343,7 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"100px"} primaryFill={"rgba(200, 0, 0)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"90px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
                             <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>

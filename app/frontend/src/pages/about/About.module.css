@@ -1,0 +1,26 @@
+.about_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 10px;
+}
+.about_allert {
+    background-color: rgba(255, 0, 0, 0.115);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 10px;
+    margin: auto;
+    border-radius: 10px;
+    width: 800px;
+}
+
+.about_allert_text {
+    display: flex;
+    text-align: start;
+    margin: 10px;
+    font-weight: 600;
+    text-wrap: wrap;
+}

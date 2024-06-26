@@ -83,6 +83,8 @@
 .supContainer {
     text-decoration: none;
     cursor: pointer;
+    position: sticky;
+    top: 0;
 }
 
 .supContainer:hover {
