@@ -88,6 +88,7 @@ class ChatApproach(Approach, ABC):
         chat_completion_response: ChatCompletion = await chat_coroutine
         chat_resp = chat_completion_response.model_dump()  # Convert to dict to make it JSON serializable
         chat_resp = chat_resp["choices"][0]
+        print(f'RISPOSTA DEL MODELLO\n{chat_resp}')
         chat_resp["context"] = extra_info
         if overrides.get("suggest_followup_questions"):
             content, followup_questions = self.extract_followup_questions(chat_resp["message"]["content"])
