@@ -7,13 +7,21 @@ export function Component(): JSX.Element {
             <AboutCard />
             <div className={styles.about_allert}>
                 <p className={styles.about_allert_text}>
-                    <i>
-                        All services provided, including OpenAi models, are exclusively hosted in the Microsoft cloud Azure of the IIT Foundation and managed by
-                        the ICT Application Management office. <br /> This ensures that the data will not be used by third parties for fine-tuning the models.
-                        <br />
-                        Please do not enter any personal data.
-                    </i>
+                    <a href="https://intranet.iit.it/offices/information-and-communication-technology/computers-software/service-desk/chatict" target="_blank">
+                        Privacy policy & Terms of use
+                    </a>
+                    &nbsp;&nbsp; <span>|</span>&nbsp;&nbsp;
+                    <a href="mailto:ict_servicedesk@iit.it" target="_blank">
+                        ICT Service Desk
+                    </a>
+                    &nbsp;&nbsp; <span>|</span>&nbsp;&nbsp;
+                    <a href="https://ictsupport.iit.it/assystnet/application.jsp#services" target="_blank">
+                        ICT Customer Portal
+                    </a>
                 </p>
+            </div>
+            <div className={styles.about_version}>
+                current version: <span style={{ fontWeight: "600" }}>v3.0.3</span>
             </div>
         </div>
     );

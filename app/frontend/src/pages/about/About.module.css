@@ -3,24 +3,59 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
     margin: 10px;
 }
 .about_allert {
-    background-color: rgba(255, 0, 0, 0.115);
+    /* background-color: rgba(255, 0, 0, 0.115); */
+    background-color: rgba(0, 0, 0, 0.752);
     display: flex;
     flex-direction: column;
     position: relative;
     top: 10px;
     margin: auto;
     border-radius: 10px;
-    width: 800px;
+    width: 50%;
+    align-items: center;
 }
 
 .about_allert_text {
+    color: white;
+    font-style: italic;
     display: flex;
-    text-align: start;
     margin: 10px;
-    font-weight: 600;
+    font-weight: 400;
     text-wrap: wrap;
+    font-size: 14px;
+}
+.about_allert_text span {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+.about_allert_text a {
+    color: white;
+    text-decoration: none;
+}
+
+.about_allert_text a:visited {
+    color: white;
+}
+.about_allert_text a:hover {
+    color: white;
+    font-weight: 600;
+}
+
+.about_allert_text a:active {
+    color: rgba(255, 255, 255, 0.556);
+    font-weight: 600;
+}
+.about_version {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    margin-top: 10px;
+    font-size: 12px;
+    font-style: italic;
 }

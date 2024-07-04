@@ -343,10 +343,12 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"90px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data</h1>
-                            <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
+                            {/* <h1 className={styles.chatEmptyStateTitle}>Chat with ICT</h1> */}
+                            <h2 className={styles.chatEmptyStateSubtitle}>
+                                <i>Ask your question or try one of the examples below</i>
+                            </h2>
                             <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
                         </div>
                     ) : (
@@ -418,7 +420,7 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. How can fix a VPN SSL handshake error?)"
+                            placeholder="Type a new question (e.g. fix a VPN SSL handshake error)"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                             showSpeechInput={showSpeechInput}

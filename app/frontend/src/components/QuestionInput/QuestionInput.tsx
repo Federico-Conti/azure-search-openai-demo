@@ -94,13 +94,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             />
             <div className={styles.questionInputButtonsContainer}>
                 <Tooltip content="Ask question button" relationship="label">
-                    <Button size="large" icon={<Send28Filled primaryFill="#ba000d" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
+                    <Button size="medium" icon={<Send28Filled primaryFill="black" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
             </div>
             {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
             {/* Aggiunto Allert per informare l'utente che il chatbot può fare errori */}
             <div className={styles.questionInputAllert}>
                 <p className={styles.questionInputAllertText}>ChatICT can make mistakes. Check important info.</p>
+                {/* <p className={styles.questionInputAllertText}>ChatICT can make mistakes, but people from ICT team can make worse ones &#128512;</p> */}
             </div>
         </Stack>
     );
