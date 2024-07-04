@@ -26,7 +26,10 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
+        // prende username utente
+        // body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
+        // prende oif utente
+        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.idTokenClaims?.oid}` })
     };
 
     //FlowName: ChatICTV3:Log_AddUserQuery
