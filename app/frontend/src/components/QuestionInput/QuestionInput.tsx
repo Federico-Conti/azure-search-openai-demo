@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { Button, Tooltip } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
 import { useMsal } from "@azure/msal-react";
 
-import { isLoggedIn, requireLogin } from "../../authConfig";
 import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
-import { appServicesToken, appServicesLogout } from "../../authConfig"; //ICT_PATCH/automate_query_log
+import { LoginContext } from "../../loginContext";
+import { requireLogin } from "../../authConfig";
 
 interface Props {
     onSend: (question: string) => void;
@@ -22,6 +22,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
     const [question, setQuestion] = useState<string>("");
     const { instance } = useMsal(); //ICT_PATCH/automate_query_log (era riga 73)
     const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_query_log
+    const { loggedIn } = useContext(LoginContext);
 
     const requestOptions = {
         method: "POST",
@@ -75,7 +76,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         }
     };
 
-    const disableRequiredAccessControl = requireLogin && !isLoggedIn(instance);
+    const disableRequiredAccessControl = requireLogin && !loggedIn;
     const sendQuestionDisabled = disabled || !question.trim() || requireLogin;
 
     if (disableRequiredAccessControl) {
