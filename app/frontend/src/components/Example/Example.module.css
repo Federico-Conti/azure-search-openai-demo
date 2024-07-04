@@ -8,18 +8,6 @@
     flex: 0;
     justify-content: center;
 }
-@media only screen and (max-width: 1340px) {
-    .examplesNavList {
-        max-height: 500px;
-        list-style: none;
-        padding-left: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        flex: 1;
-        justify-content: center;
-    }
-}
 
 .example {
     word-break: break-word;
