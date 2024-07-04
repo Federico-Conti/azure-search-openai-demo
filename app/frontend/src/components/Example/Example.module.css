@@ -1,11 +1,24 @@
 .examplesNavList {
+    max-width: 1100px;
     list-style: none;
     padding-left: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    flex: 1;
+    flex: 0;
     justify-content: center;
+}
+@media only screen and (max-width: 1340px) {
+    .examplesNavList {
+        max-height: 500px;
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        flex: 1;
+        justify-content: center;
+    }
 }
 
 .example {
@@ -14,7 +27,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 5px;
     cursor: pointer;
     text-align: center;
@@ -37,6 +50,10 @@
     font-weight: 600;
 }
 
+.exampleText:hover {
+    font-size: 15.5px;
+}
+
 @media only screen and (max-height: 780px) {
     .exampleText {
         font-size: 15px;
@@ -44,18 +61,5 @@
         position: relative;
         bottom: 2px;
         font-weight: 600;
-    }
-}
-
-@media only screen and (max-width: 1340px) {
-    .examplesNavList {
-        max-height: 100px;
-        list-style: none;
-        padding-left: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        flex: 1;
-        justify-content: center;
     }
 }
