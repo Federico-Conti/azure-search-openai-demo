@@ -45,7 +45,7 @@ export const DocumentList = ({ className }: Props) => {
             const originalHash = citation2.indexOf("#") ? citation2.split("#")[1] : "";
             const response = await fetch(citation2, {
                 method: "GET",
-                headers: getHeaders(token)
+                headers: await getHeaders(token)
             });
             const citationContent = await response.blob();
             let citationObjectUrl = URL.createObjectURL(citationContent);
