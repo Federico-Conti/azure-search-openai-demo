@@ -30,9 +30,9 @@
 }
 
 .chatEmptyStateTitle {
-    font-size: 40px;
+    font-size: 21px;
     font-weight: 600;
-    margin-top: 0;
+    margin-top: 5px;
     margin-bottom: 0;
 }
 
@@ -45,11 +45,6 @@
 @media only screen and (max-height: 780px) {
     .chatEmptyState {
         padding-top: 0;
-    }
-
-    .chatEmptyStateTitle {
-        font-size: 40px;
-        margin-bottom: 0px;
     }
 }
 /* @media only screen and (max-width: 1340px) {
@@ -127,4 +122,11 @@
 .commandButton {
     margin-right: 20px;
     margin-bottom: 20px;
+}
+
+.chatfeedbackarea {
+    position: sticky;
+    bottom: 0;
+    align-self: flex-end;
+    margin: 10px;
 }

@@ -10,7 +10,7 @@
     font-weight: 600;
     margin-bottom: 1rem;
     text-align: center;
-    color: #ba000d;
+    color: #0072af;
 }
 
 .documentlist_ul {
@@ -28,7 +28,7 @@
 }
 
 .documentlist_li:active {
-    color: red;
+    color: #0072af;
     font-weight: 600;
 }
 

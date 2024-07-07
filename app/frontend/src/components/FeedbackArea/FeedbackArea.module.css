@@ -1,0 +1,81 @@
+.feed_dialogcontent {
+    background-color: #f2f2f2;
+    width: 30%;
+}
+
+.feed_dialogtitle {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.feed_formContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border: 1px solid #123bb6;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px;
+    transition: all 0.2s ease-in;
+}
+
+.feed_radioGroup {
+    font-size: small;
+}
+.feed_formElement {
+    flex-direction: vertical;
+    display: flex;
+    gap: 1px;
+    margin-bottom: 10px;
+}
+
+.feed_formTextArea {
+    padding: 2px;
+    background-color: white;
+    margin-top: 5px;
+    font-size: small;
+    font-weight: 400;
+    border: 0px;
+    resize: none;
+    height: 60px;
+    width: 100%;
+}
+
+.feed_disablebutton {
+    border: 2px solid #7376e1;
+    color: black;
+    border-radius: 10px;
+    align-items: center;
+    height: 23px;
+    width: 23px;
+    font-size: small;
+}
+
+.feed_submitbutton {
+    background-color: #7376e1;
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    align-items: center;
+    height: 23px;
+    width: 23px;
+    font-size: small;
+}
+
+.feed_triggerbutton {
+    background-color: #7376e1;
+    color: white;
+    font-weight: 500;
+    font-size: small;
+}
+
+.feed_submitbutton:hover {
+    background-color: #d1dbfa;
+}
+.feed_disablebutton:hover {
+    border-color: #d1dbfa;
+}
+.feed_triggerbutton:hover {
+    background-color: #d1dbfa;
+}

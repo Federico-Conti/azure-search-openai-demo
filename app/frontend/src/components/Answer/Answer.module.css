@@ -32,7 +32,8 @@
 }
 
 .selected {
-    outline: 2px solid #dd2c00;
+    /* outline: 2px solid #dd2c00; */
+    outline: 2px solid #0072af;
 }
 
 .citationLearnMore {
@@ -47,8 +48,10 @@
     text-align: center;
     border-radius: 4px;
     padding: 0px 8px;
-    background: #ffccbc;
-    color: #ba000d;
+    /* background: #ffccbc;
+    color: #ba000d; */
+    background: #0072af1b;
+    color: #0072af;
     text-decoration: none;
     cursor: pointer;
 }
@@ -104,8 +107,10 @@ sup {
     min-width: 14px;
     height: 14px;
     border-radius: 3px;
-    background: #ffccbc;
-    color: #ba000d;
+    /* background: #ffccbc;
+    color: #ba000d; */
+    background: #0072af1b;
+    color: #0072af;
     text-decoration-color: transparent;
     outline: transparent solid 1px;
     cursor: pointer;

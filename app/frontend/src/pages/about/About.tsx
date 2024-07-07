@@ -11,12 +11,8 @@ export function Component(): JSX.Element {
                         Privacy policy & Terms of use
                     </a>
                     &nbsp;&nbsp; <span>|</span>&nbsp;&nbsp;
-                    <a href="mailto:ict_servicedesk@iit.it" target="_blank">
-                        ICT Service Desk
-                    </a>
-                    &nbsp;&nbsp; <span>|</span>&nbsp;&nbsp;
                     <a href="https://ictsupport.iit.it/assystnet/application.jsp#services" target="_blank">
-                        ICT Customer Portal
+                        ICT Service Desk
                     </a>
                 </p>
             </div>

@@ -7,7 +7,7 @@
 }
 .about_allert {
     /* background-color: rgba(255, 0, 0, 0.115); */
-    background-color: rgba(0, 0, 0, 0.752);
+    background-color: #0072af;
     display: flex;
     flex-direction: column;
     position: relative;

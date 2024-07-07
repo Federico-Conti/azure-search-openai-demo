@@ -44,15 +44,15 @@ export const AboutCard = () => {
     return (
         <Card className={styles.card}>
             <CardHeader
-                image={<BotSparkleFilled fontSize={"40px"} primaryFill={""} aria-hidden="true" aria-label="Chat logo" />}
+                image={<BotSparkleFilled fontSize={"40px"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />}
                 header={
                     <Body1>
-                        <b>ChatICT</b> mentioned you
+                        <b>ChatICT</b>
                     </Body1>
                 }
                 description={
                     <Caption1>
-                        About me - <strong>{title}</strong>
+                        About - <strong>{title}</strong>
                     </Caption1>
                 }
             />

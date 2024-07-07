@@ -27,6 +27,7 @@ import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel
 import { SettingsButton } from "../../components/SettingsButton";
 import { CopyrightButton } from "../../components/CopyrightButton";
 import { DocumentList } from "../../components/DocumentList"; //ICT_PATCH/ICT_Knowledge_Scope
+import { FeedbackArea } from "../../components/FeedbackArea"; //ICT_PATCH/ICT_Feedback_Area
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { UploadFile } from "../../components/UploadFile";
 import { useLogin, getToken, requireAccessControl } from "../../authConfig";
@@ -345,9 +346,9 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            {/* <h1 className={styles.chatEmptyStateTitle}>Chat with ICT</h1> */}
+                            <h1 className={styles.chatEmptyStateTitle}>Do you need ICT support?</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>
                                 <i>Ask your question or try one of the examples below</i>
                             </h2>
@@ -422,14 +423,17 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. fix a VPN SSL handshake error)"
+                            placeholder="To help protect your privacy, don't include personal information such as your name, phone number or email address."
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                             showSpeechInput={showSpeechInput}
                         />
                     </div>
+                    {/*ICT_PATCH/ICT_Feedback_Area */}
+                    <div className={styles.chatfeedbackarea}>
+                        <FeedbackArea />
+                    </div>
                 </div>
-
                 {answers.length > 0 && activeAnalysisPanelTab && (
                     <AnalysisPanel
                         className={styles.chatAnalysisPanel}
@@ -440,7 +444,6 @@ const Chat = () => {
                         activeTab={activeAnalysisPanelTab}
                     />
                 )}
-
                 <Panel
                     headerText="Configure answer generation"
                     isOpen={isConfigPanelOpen}
