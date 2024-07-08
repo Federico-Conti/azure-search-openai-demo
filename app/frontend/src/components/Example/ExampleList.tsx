@@ -2,7 +2,14 @@ import { Example } from "./Example";
 
 import styles from "./Example.module.css";
 
-const DEFAULT_EXAMPLES: string[] = ["How can reset a IIT password?", "I need to install a new software", "I need to connect to wifi"];
+const DEFAULT_EXAMPLES: string[] = [
+    "How to install a printer?",
+    "How to reset password?",
+    "I need to install a new software",
+    "How can I install vpn?",
+    "Sync my email and calendar with iPhone",
+    "Connect to wifi with Android device"
+];
 
 const GPT4V_EXAMPLES: string[] = [
     "Compare the impact of interest rates and GDP in financial markets.",

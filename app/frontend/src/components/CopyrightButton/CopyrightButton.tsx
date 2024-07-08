@@ -12,8 +12,8 @@ interface Props {
 export const CopyrightButton = ({ className, disabled, onClick }: Props) => {
     return (
         <div className={`${styles.container} ${className ?? ""}`}>
-            <Button icon={<CodeBlockRegular fontFamily="" primaryFill={"rgba(200, 0, 0)"} />} disabled={disabled} onClick={onClick}>
-                {"by ICT Directorate"}
+            <Button icon={<CodeBlockRegular fontFamily="" primaryFill={"rgba(0, 0, 0)"} fontSize={"16px"} />} disabled={disabled} onClick={onClick}>
+                <i>{"by ICT Directorate"}</i>
             </Button>
         </div>
     );

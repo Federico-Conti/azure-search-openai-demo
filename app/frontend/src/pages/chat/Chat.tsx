@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { Checkbox, Panel, DefaultButton, TextField, ITextFieldProps, ICheckboxProps } from "@fluentui/react";
 import { BotSparkleFilled } from "@fluentui/react-icons";
 import { useId } from "@fluentui/react-hooks";
@@ -29,12 +29,13 @@ import { CopyrightButton } from "../../components/CopyrightButton";
 import { DocumentList } from "../../components/DocumentList"; //ICT_PATCH/ICT_Knowledge_Scope
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { UploadFile } from "../../components/UploadFile";
-import { useLogin, getToken, isLoggedIn, requireAccessControl } from "../../authConfig";
+import { useLogin, getToken, requireAccessControl } from "../../authConfig";
 import { VectorSettings } from "../../components/VectorSettings";
 import { useMsal } from "@azure/msal-react";
 import { TokenClaimsDisplay } from "../../components/TokenClaimsDisplay";
 import { GPT4VSettings } from "../../components/GPT4VSettings";
 import { toolTipText } from "../../i18n/tooltips.js";
+import { LoginContext } from "../../loginContext";
 
 const Chat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
@@ -138,6 +139,7 @@ const Chat = () => {
     };
 
     const client = useLogin ? useMsal().instance : undefined;
+    const { loggedIn } = useContext(LoginContext);
 
     const makeApiRequest = async (question: string) => {
         lastQuestionRef.current = question;
@@ -176,7 +178,7 @@ const Chat = () => {
                         gpt4v_input: gpt4vInput
                     }
                 },
-                // ChatAppProtocol: Client must pass on any session state received from the server
+                // AI Chat Protocol: Client must pass on any session state received from the server
                 session_state: answers.length ? answers[answers.length - 1][1].session_state : null
             };
 
@@ -334,8 +336,8 @@ const Chat = () => {
         <div className={styles.container}>
             <div className={styles.commandsContainer}>
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
-                {showUserUpload && <UploadFile className={styles.commandButton} disabled={!isLoggedIn(client)} />}
-                {/* <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} /> */}
+                {showUserUpload && <UploadFile className={styles.commandButton} disabled={!loggedIn} />}
+                <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
                 <DocumentList className={styles.commandButton} />
                 <CopyrightButton className={styles.commandButton} onClick={() => null} disabled={true} />
             </div>
@@ -343,10 +345,12 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"90px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            <h1 className={styles.chatEmptyStateTitle}>Chat with ICT data</h1>
-                            <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
+                            {/* <h1 className={styles.chatEmptyStateTitle}>Chat with ICT</h1> */}
+                            <h2 className={styles.chatEmptyStateSubtitle}>
+                                <i>Ask your question or try one of the examples below</i>
+                            </h2>
                             <ExampleList onExampleClicked={onExampleClicked} useGPT4V={useGPT4V} />
                         </div>
                     ) : (
@@ -418,7 +422,7 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. How can fix a VPN SSL handshake error?)"
+                            placeholder="Type a new question (e.g. fix a VPN SSL handshake error)"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                             showSpeechInput={showSpeechInput}
@@ -538,6 +542,7 @@ const Chat = () => {
                         id={excludeCategoryFieldId}
                         className={styles.chatSettingsSeparator}
                         label="Exclude category"
+                        defaultValue={excludeCategory}
                         onChange={onExcludeCategoryChanged}
                         aria-labelledby={excludeCategoryId}
                         onRenderLabel={(props: ITextFieldProps | undefined) => (
@@ -633,7 +638,7 @@ const Chat = () => {
                                 className={styles.chatSettingsSeparator}
                                 checked={useOidSecurityFilter || requireAccessControl}
                                 label="Use oid security filter"
-                                disabled={!isLoggedIn(client) || requireAccessControl}
+                                disabled={!loggedIn || requireAccessControl}
                                 onChange={onUseOidSecurityFilterChange}
                                 aria-labelledby={useOidSecurityFilterId}
                                 onRenderLabel={(props: ICheckboxProps | undefined) => (
@@ -650,7 +655,7 @@ const Chat = () => {
                                 className={styles.chatSettingsSeparator}
                                 checked={useGroupsSecurityFilter || requireAccessControl}
                                 label="Use groups security filter"
-                                disabled={!isLoggedIn(client) || requireAccessControl}
+                                disabled={!loggedIn || requireAccessControl}
                                 onChange={onUseGroupsSecurityFilterChange}
                                 aria-labelledby={useGroupsSecurityFilterId}
                                 onRenderLabel={(props: ICheckboxProps | undefined) => (

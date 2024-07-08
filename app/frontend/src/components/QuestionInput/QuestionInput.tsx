@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { Button, Tooltip } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
 import { useMsal } from "@azure/msal-react";
 
-import { isLoggedIn, requireLogin } from "../../authConfig";
 import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
-import { appServicesToken, appServicesLogout } from "../../authConfig"; //ICT_PATCH/automate_query_log
+import { LoginContext } from "../../loginContext";
+import { requireLogin } from "../../authConfig";
 
 interface Props {
     onSend: (question: string) => void;
@@ -22,11 +22,15 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
     const [question, setQuestion] = useState<string>("");
     const { instance } = useMsal(); //ICT_PATCH/automate_query_log (era riga 73)
     const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_query_log
+    const { loggedIn } = useContext(LoginContext);
 
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
+        // prende username utente
+        // body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
+        // prende oif utente
+        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.idTokenClaims?.oid}` })
     };
 
     //FlowName: ChatICTV3:Log_AddUserQuery
@@ -72,7 +76,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         }
     };
 
-    const disableRequiredAccessControl = requireLogin && !isLoggedIn(instance);
+    const disableRequiredAccessControl = requireLogin && !loggedIn;
     const sendQuestionDisabled = disabled || !question.trim() || requireLogin;
 
     if (disableRequiredAccessControl) {
@@ -94,13 +98,14 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             />
             <div className={styles.questionInputButtonsContainer}>
                 <Tooltip content="Ask question button" relationship="label">
-                    <Button size="large" icon={<Send28Filled primaryFill="#ba000d" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
+                    <Button size="medium" icon={<Send28Filled primaryFill="black" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
             </div>
             {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
             {/* Aggiunto Allert per informare l'utente che il chatbot può fare errori */}
             <div className={styles.questionInputAllert}>
                 <p className={styles.questionInputAllertText}>ChatICT can make mistakes. Check important info.</p>
+                {/* <p className={styles.questionInputAllertText}>ChatICT can make mistakes, but people from ICT team can make worse ones &#128512;</p> */}
             </div>
         </Stack>
     );
