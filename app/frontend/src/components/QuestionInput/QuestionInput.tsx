@@ -19,6 +19,12 @@ interface Props {
     showSpeechInput?: boolean;
 }
 
+//ICT_PATCH/automate_query_log
+type Claim = {
+    name: string;
+    value: string;
+};
+
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion, showSpeechInput }: Props) => {
     const [question, setQuestion] = useState<string>("");
     const { loggedIn } = useContext(LoginContext);
@@ -34,12 +40,40 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
 
         fetchClaims();
     }, []);
+    //ICT_PATCH/automate_query_log
+    const ToString = (a: string | any) => {
+        if (typeof a === "string") {
+            return a;
+        } else {
+            return JSON.stringify(a);
+        }
+    };
+    //ICT_PATCH/automate_query_log
+    let createClaims = (o: Record<string, unknown> | undefined) => {
+        return Object.keys(o ?? {}).map((key: string) => {
+            let originalKey = key;
+            try {
+                // Some claim names may be a URL to a full schema, just use the last part of the URL in this case
+                const url = new URL(key);
+                const parts = url.pathname.split("/");
+                key = parts[parts.length - 1];
+            } catch (error) {
+                // Do not parse key if it's not a URL
+            }
+            return { name: key, value: ToString((o ?? {})[originalKey]) };
+        });
+    };
+
+    //ICT_PATCH/automate_query_log
+    const oid: string = createClaims(claims)
+        .filter(item => item.name === "objectidentifier")
+        .map(item => item.value)[0];
 
     //ICT_PATCH/automate_query_log
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UserQuery: question, User: claims?.oid })
+        body: JSON.stringify({ UserQuery: question, User: oid })
     };
 
     //ICT_PATCH/automate_query_log
@@ -110,7 +144,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
             {/* Aggiunto Allert per informare l'utente che il chatbot può fare errori */}
             <div className={styles.questionInputAllert}>
-                <p className={styles.questionInputAllertText}>ChatICT can make mistakes. Closely review what it generates.</p>
+                <p className={styles.questionInputAllertText}>AI-generated content may be incorrect. Closely review what is generated.</p>
                 {/* <p className={styles.questionInputAllertText}>ChatICT can make mistakes, but people from ICT team can make worse ones &#128512;</p> */}
             </div>
         </Stack>

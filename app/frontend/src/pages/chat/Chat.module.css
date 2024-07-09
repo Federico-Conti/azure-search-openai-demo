@@ -128,5 +128,5 @@
     position: sticky;
     bottom: 0;
     align-self: flex-end;
-    margin: 10px;
+    padding-right: 24px;
 }

@@ -4,15 +4,8 @@ import { Card, CardFooter, CardHeader, CardPreview } from "@fluentui/react-compo
 import { BotSparkleFilled } from "@fluentui/react-icons";
 import { DeleteFilled } from "@fluentui/react-icons";
 import { FolderFilled } from "@fluentui/react-icons";
-import { ClipboardBulletListLtrRegular } from "@fluentui/react-icons";
 import style from "./AboutCard.module.css";
 import React, { useState, ChangeEvent, useEffect } from "react";
-
-const resolveAsset = (asset: string) => {
-    const ASSET_URL = "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react-components/react-card/stories/src/assets/";
-
-    return `${ASSET_URL}${asset}`;
-};
 
 const useStyles = makeStyles({
     card: {

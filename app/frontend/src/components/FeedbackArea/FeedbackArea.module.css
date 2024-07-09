@@ -1,12 +1,12 @@
 .feed_dialogcontent {
     background-color: #f2f2f2;
-    width: 30%;
+    width: 60%;
 }
 
-.feed_dialogtitle {
+/* .feed_dialogtitle {
     font-size: 16px;
     font-weight: 700;
-}
+} */
 
 .feed_formContainer {
     margin: auto;
@@ -21,7 +21,7 @@
 }
 
 .feed_radioGroup {
-    font-size: small;
+    font-size: 14px;
 }
 .feed_formElement {
     flex-direction: vertical;
@@ -41,7 +41,7 @@
     height: 60px;
     width: 100%;
 }
-
+/* 
 .feed_disablebutton {
     border: 2px solid #7376e1;
     color: black;
@@ -66,7 +66,7 @@
 .feed_triggerbutton {
     background-color: #7376e1;
     color: white;
-    font-weight: 500;
+    font-weight: 400;
     font-size: small;
 }
 
@@ -78,4 +78,4 @@
 }
 .feed_triggerbutton:hover {
     background-color: #d1dbfa;
-}
+} */
