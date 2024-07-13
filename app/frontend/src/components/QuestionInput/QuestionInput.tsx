@@ -128,7 +128,19 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             <TextField
                 className={styles.questionInputTextArea}
                 disabled={disableRequiredAccessControl}
-                placeholder={placeholder}
+                placeholder={"To help protect your privacy, don't include personal information such as your name, phone number or email address."}
+                multiline
+                resizable={false}
+                borderless
+                value={question}
+                onChange={onQuestionChange}
+                onKeyDown={onEnterPress}
+            />
+            {/* Aggiunto TextField per Mobile */}
+            <TextField
+                className={styles.questionInputTextAreaMobile}
+                disabled={disableRequiredAccessControl}
+                placeholder={"AI-generated content may be incorrect. Closely review what is generated."}
                 multiline
                 resizable={false}
                 borderless

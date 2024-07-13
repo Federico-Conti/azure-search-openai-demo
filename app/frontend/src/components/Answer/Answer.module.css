@@ -1,23 +1,25 @@
+@import "./../../../ictconst.css";
+
 .answerContainer {
-    padding: 20px;
+    padding: 1.25em;
     background: rgb(249, 249, 249);
-    border-radius: 8px;
+    border-radius: 0.5em;
     box-shadow:
-        0px 2px 4px rgba(0, 0, 0, 0.14),
-        0px 0px 2px rgba(0, 0, 0, 0.12);
-    outline: transparent solid 1px;
+        0em 0.125em 0.25em rgba(0, 0, 0, 0.14),
+        0em 0em 0.125em rgba(0, 0, 0, 0.12);
+    outline: transparent solid 0.0625em;
 }
 
 .answerLogo {
-    font-size: 28px;
+    font-size: 1.75em;
 }
 
 .answerText {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    line-height: 22px;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    line-height: 1.375em;
+    padding-top: 1em;
+    padding-bottom: 1em;
     white-space: pre-line;
 }
 
@@ -28,30 +30,29 @@
 .answerText td,
 .answerText th {
     border: 1px solid;
-    padding: 5px;
+    padding: 0.3125em;
 }
 
 .selected {
-    /* outline: 2px solid #dd2c00; */
-    outline: 2px solid #0072af;
+    outline: 0.125em solid var(--answercardbg);
 }
 
 .citationLearnMore {
-    margin-right: 5px;
+    font-size: 1.1rem;
+    margin-right: 0.3125em;
     font-weight: 600;
-    line-height: 24px;
+    line-height: 1.5em;
 }
 
 .citation {
+    font-size: 1rem;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 1.5em;
     text-align: center;
-    border-radius: 4px;
-    padding: 0px 8px;
-    /* background: #ffccbc;
-    color: #ba000d; */
-    background: #0072af1b;
-    color: #0072af;
+    border-radius: 0.25em;
+    padding: 0em 0.5em;
+    background: var(--citationbg);
+    color: var(--citation);
     text-decoration: none;
     cursor: pointer;
 }
@@ -61,21 +62,21 @@
 }
 
 .followupQuestionsList {
-    margin-top: 10px;
+    margin-top: 0.625em;
 }
 
 .followupQuestionLearnMore {
-    margin-right: 5px;
+    margin-right: 0.3125em;
     font-weight: 600;
-    line-height: 24px;
+    line-height: 1.5em;
 }
 
 .followupQuestion {
     font-weight: 600;
-    line-height: 24px;
+    line-height: 1.5em;
     text-align: center;
-    border-radius: 4px;
-    padding: 0px 8px;
+    border-radius: 0.25em;
+    padding: 0em 0.5em;
     background: #e8ebfa;
     color: black;
     font-style: italic;
@@ -86,8 +87,6 @@
 .supContainer {
     text-decoration: none;
     cursor: pointer;
-    position: sticky;
-    top: 0;
 }
 
 .supContainer:hover {
@@ -99,20 +98,18 @@ sup {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 0.625em;
     font-weight: 600;
     vertical-align: top;
     top: -1;
-    margin: 0px 2px;
-    min-width: 14px;
-    height: 14px;
-    border-radius: 3px;
-    /* background: #ffccbc;
-    color: #ba000d; */
-    background: #0072af1b;
-    color: #0072af;
+    margin: 0em 0.125em;
+    min-width: 0.875em;
+    height: 0.875em;
+    border-radius: 0.1875em;
+    background: var(--citationbg);
+    color: var(--citation);
     text-decoration-color: transparent;
-    outline: transparent solid 1px;
+    outline: transparent solid 0.0625em;
     cursor: pointer;
 }
 

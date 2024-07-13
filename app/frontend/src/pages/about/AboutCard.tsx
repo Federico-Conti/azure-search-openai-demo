@@ -109,7 +109,7 @@ export const AboutCard = () => {
                         <li>
                             <p>
                                 During the interaction, ChatICT memorizes previous questions and answers to provide a context for subsequent queries. <br />
-                                <i style={{ fontSize: "16px", fontFamily: "italic" }}>
+                                <i style={{ fontSize: "1rem", fontFamily: "italic" }}>
                                     (To get a clearer response, make sure you clear your history before approaching a new topic.)
                                 </i>
                             </p>
@@ -135,7 +135,7 @@ export const AboutCard = () => {
                                 <span className={style.aboutCard_citation}>1. This is a reference</span>
                             </p>
 
-                            <i style={{ fontSize: "16px", fontFamily: "italic" }}>
+                            <i style={{ fontSize: "1rem", fontFamily: "italic" }}>
                                 (If you are not satisfied with the answer ChatICT has provided, you could try to rephrase the question. The answers provided by
                                 the model are not deterministic, with some different information in the input, the output may change and provide better
                                 results.)

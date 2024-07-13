@@ -1,6 +1,9 @@
+@import "./../../../ictconst.css";
+
 .loginButton {
     border-radius: 15px;
-    border-color: #0072af;
+    border-width: 2px;
+    border-color: var(--iitcard);
     background-color: #fffffff2;
     /* padding: 30px 30px; */
     font-weight: 100;

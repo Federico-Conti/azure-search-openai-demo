@@ -1,5 +1,5 @@
 import { BotSparkleFilled } from "@fluentui/react-icons";
 
 export const AnswerIcon = () => {
-    return <BotSparkleFilled fontSize={"35px"} primaryFill={"rgb(0, 114, 175)"} aria-hidden="true" aria-label="Answer logo" />;
+    return <BotSparkleFilled fontSize={"2.188rem"} primaryFill={"#0072af"} aria-hidden="true" aria-label="Answer logo" />;
 };

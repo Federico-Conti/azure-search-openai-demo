@@ -346,7 +346,7 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"3.438rem"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
                             <h1 className={styles.chatEmptyStateTitle}>Do you need ICT support?</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>

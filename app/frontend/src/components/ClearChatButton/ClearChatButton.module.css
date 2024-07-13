@@ -1,7 +1,7 @@
 .container {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.375em;
     cursor: pointer;
-    font-weight: 600;
+    padding: 0.5rem;
 }

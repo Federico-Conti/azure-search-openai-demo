@@ -1,3 +1,11 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 0.375em;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
 .documentlist_KnowledgeTitle {
     font-size: 1.5rem;
     font-weight: 600;
@@ -58,5 +66,5 @@
 }
 
 .documentlist_dismiss:hover {
-    font-size: 40px;
+    font-size: 2.5rem;
 }

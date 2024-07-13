@@ -1,3 +1,5 @@
+@import "./../../../ictconst.css";
+
 .feed_dialogcontent {
     background-color: #f2f2f2;
     width: 60%;
@@ -13,7 +15,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    border: 1px solid #123bb6;
+    border: 1px solid var(--answercardbg);
     box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     padding: 30px;

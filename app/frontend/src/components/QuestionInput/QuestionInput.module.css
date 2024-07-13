@@ -16,6 +16,10 @@
     line-height: 40px;
 }
 
+.questionInputTextAreaMobile {
+    display: none;
+}
+
 .questionInputButtonsContainer {
     display: flex;
     flex-direction: column;
@@ -38,7 +42,26 @@
 
 .questionInputAllertText {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 0.875rem;
     margin: 10px;
     color: black;
+}
+
+@media (max-width: 992px) {
+    .questionInputAllertText {
+        display: none;
+    }
+
+    .questionInputTextArea {
+        display: none;
+    }
+    .questionInputTextAreaMobile {
+        display: block;
+    }
+    .questionInputTextAreaMobile {
+        height: 60px;
+        width: 100%;
+        bottom: 15px;
+        line-height: 40px;
+    }
 }
