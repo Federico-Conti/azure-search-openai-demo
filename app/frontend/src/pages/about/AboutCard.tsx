@@ -37,7 +37,7 @@ export const AboutCard = () => {
     return (
         <Card className={styles.card}>
             <CardHeader
-                image={<BotSparkleFilled fontSize={"40px"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />}
+                image={<BotSparkleFilled fontSize={"2.5rem"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />}
                 header={
                     <Body1>
                         <b>ChatICT</b>
@@ -59,9 +59,9 @@ export const AboutCard = () => {
                             particular: Azure Storage as cloud container, Azure Ai Search as vector db, and LLM models such as Azure OpenAI.
                         </p>
                         <p>
-                            ChatICT is a first pilot of an open-book application. It exploits Generative AI technology by integrating the knowledge of our ICT
-                            services stored in policies, procedures, user guides, and other technical documents, providing an interactive experience that
-                            efficiently retrieves answers 'ready for users' from Knowledge Scope.
+                            ChatICT is a first pilot of an agent that exploits Generative AI technology by integrating the knowledge of our ICT services stored
+                            in policies, procedures, user guides, and other technical documents, providing an interactive experience that efficiently retrieves
+                            answers 'ready for users' from Knowledge Scope.
                         </p>
                         Main features:
                         <ul>
