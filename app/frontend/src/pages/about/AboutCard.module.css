@@ -11,3 +11,13 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.aboutCard_container {
+    position: "relative";
+    width: 720px;
+    max-width: 100%;
+    margin-bottom: 33px;
+    padding: 0;
+    background-color: white;
+    font-size: 0.9rem;
+}

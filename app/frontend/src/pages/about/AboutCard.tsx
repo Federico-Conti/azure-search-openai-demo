@@ -7,16 +7,19 @@ import { FolderFilled } from "@fluentui/react-icons";
 import style from "./AboutCard.module.css";
 import React, { useState, ChangeEvent, useEffect } from "react";
 
-const useStyles = makeStyles({
-    card: {
-        width: "720px",
-        maxWidth: "100%",
-        backgroundColor: "white"
-    }
-});
+// const useStyles = makeStyles({
+//     card: {
+//         position: "relative",
+//         width: "720px",
+//         maxWidth: "100%",
+//         backgroundColor: "white",
+//         marginBottom: "52px",
+//         height: "100%"
+//     }
+// });
 
 export const AboutCard = () => {
-    const styles = useStyles();
+    // const styles = useStyles();
     const [showCard1, setShowCard1] = useState<boolean>(true);
     const [showCard2, setShowCard2] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -35,7 +38,7 @@ export const AboutCard = () => {
     }, [counter]);
 
     return (
-        <Card className={styles.card}>
+        <div className={style.aboutCard_container}>
             <CardHeader
                 image={<BotSparkleFilled fontSize={"2.5rem"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />}
                 header={
@@ -102,7 +105,7 @@ export const AboutCard = () => {
                                 “Knowledge Scope” button.
                             </p>
                             <p style={{ textAlign: "center" }}>
-                                <FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} fontSize={"22px"} />
+                                <FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} fontSize={"1.375rem"} />
                                 Knwoledge Scope
                             </p>
                         </li>
@@ -114,7 +117,7 @@ export const AboutCard = () => {
                                 </i>
                             </p>
                             <p style={{ textAlign: "center" }}>
-                                <DeleteFilled primaryFill={"rgb(66, 73, 73)"} fontSize={"22px"} />
+                                <DeleteFilled primaryFill={"rgb(66, 73, 73)"} fontSize={"1.375rem"} />
                                 Clear chat
                             </p>
                         </li>
@@ -147,10 +150,10 @@ export const AboutCard = () => {
 
             <CardFooter style={{ marginLeft: "auto" }}>
                 <Button
-                    style={{ display: counter < 1 ? "none" : "" }}
+                    style={{ display: counter < 1 ? "none" : "", position: "relative", left: "90%" }}
                     icon={
                         <ArrowReplyRegular
-                            fontSize={40}
+                            fontSize={"2rem"}
                             onClick={() => {
                                 counter > 0 ? setCounter(counter - 1) : setCounter(counter);
                             }}
@@ -158,10 +161,10 @@ export const AboutCard = () => {
                     }
                 ></Button>
                 <Button
-                    style={{ display: counter >= 1 ? "none" : "" }}
+                    style={{ display: counter >= 1 ? "none" : "", position: "relative", left: "90%" }}
                     icon={
                         <ArrowForwardFilled
-                            fontSize={40}
+                            fontSize={"2rem"}
                             onClick={() => {
                                 counter < 1 ? setCounter(counter + 1) : setCounter(counter);
                             }}
@@ -169,6 +172,6 @@ export const AboutCard = () => {
                     }
                 ></Button>
             </CardFooter>
-        </Card>
+        </div>
     );
 };
