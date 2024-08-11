@@ -24,42 +24,67 @@
     margin-bottom: 22px;
     height: 100%;
 }
+.about_footer_content {
+    text-align: center;
+}
+.about_footer_txt {
+    display: inline-block;
+    vertical-align: middle;
 
-@media (max-width: 992px) {
+    height: 20px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+.about_footer_icons {
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    margin-bottom: 2px;
+    margin-top: 2px;
 }
 
-.about_footer_text {
-    text-align: center;
+.about_footer_txt_element {
+    /* text-align: center; */
     color: white;
     font-style: italic;
-    margin: 10px;
+    margin: 0;
     font-weight: 400;
-    text-wrap: wrap;
+    /* text-wrap: wrap; */
     font-size: 0.875rem;
 }
-.about_allert_text span {
+.about_footer_icons a {
+    color: black;
+}
+.about_footer_icons img {
+    margin-top: 1px;
+}
+.about_footer_icons svg {
+    margin-top: 1px;
+}
+.about_footer_txt_element span {
     color: white;
     text-decoration: none;
     font-weight: 600;
 }
-.about_footer_text a {
+.about_footer_txt_element a {
     color: white;
     text-decoration: none;
 }
 
-.about_footer_text a:visited {
+.about_footer_txt_element a:visited {
     color: white;
 }
-.about_footer_text a:hover {
+.about_footer_txt_element a:hover {
     color: white;
     font-weight: 600;
 }
 
-.about_footer_text a:active {
+.about_footer_txt_element a:active {
     color: rgba(255, 255, 255, 0.556);
     font-weight: 600;
 }
-.about_version {
+
+/* .about_version {
     position: relative;
     right: 0;
     bottom: 0;
@@ -68,4 +93,4 @@
     margin-top: 10px;
     font-size: 0.75rem;
     font-style: italic;
-}
+} */
