@@ -27,6 +27,7 @@ import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel
 import { SettingsButton } from "../../components/SettingsButton";
 import { CopyrightButton } from "../../components/CopyrightButton";
 import { DocumentList } from "../../components/DocumentList"; //ICT_PATCH/ICT_Knowledge_Scope
+import { FeedbackArea } from "../../components/FeedbackArea"; //ICT_PATCH/ICT_Feedback_Area
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { UploadFile } from "../../components/UploadFile";
 import { useLogin, getToken, requireAccessControl } from "../../authConfig";
@@ -40,7 +41,8 @@ import { LoginContext } from "../../loginContext";
 const Chat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
-    const [temperature, setTemperature] = useState<number>(0.6);
+    const [temperature, setTemperature] = useState<number>(0.3);
+    const [seed, setSeed] = useState<number | null>(null);
     const [minimumRerankerScore, setMinimumRerankerScore] = useState<number>(0);
     const [minimumSearchScore, setMinimumSearchScore] = useState<number>(0);
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
@@ -175,7 +177,8 @@ const Chat = () => {
                         use_groups_security_filter: useGroupsSecurityFilter,
                         vector_fields: vectorFieldList,
                         use_gpt4v: useGPT4V,
-                        gpt4v_input: gpt4vInput
+                        gpt4v_input: gpt4vInput,
+                        ...(seed !== null ? { seed: seed } : {})
                     }
                 },
                 // AI Chat Protocol: Client must pass on any session state received from the server
@@ -239,6 +242,10 @@ const Chat = () => {
 
     const onTemperatureChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
         setTemperature(parseFloat(newValue || "0"));
+    };
+
+    const onSeedChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
+        setSeed(parseInt(newValue || ""));
     };
 
     const onMinimumSearchScoreChange = (_ev?: React.SyntheticEvent<HTMLElement, Event>, newValue?: string) => {
@@ -311,6 +318,8 @@ const Chat = () => {
     const promptTemplateFieldId = useId("promptTemplateField");
     const temperatureId = useId("temperature");
     const temperatureFieldId = useId("temperatureField");
+    const seedId = useId("seed");
+    const seedFieldId = useId("seedField");
     const searchScoreId = useId("searchScore");
     const searchScoreFieldId = useId("searchScoreField");
     const rerankerScoreId = useId("rerankerScore");
@@ -345,9 +354,9 @@ const Chat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <BotSparkleFilled fontSize={"55px"} primaryFill={"rgba(200, 0, 0, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
+                            <BotSparkleFilled fontSize={"3.438rem"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />
                             {/* <img src="../../../public/bot.png" alt="BotICon" width={300} /> */}
-                            {/* <h1 className={styles.chatEmptyStateTitle}>Chat with ICT</h1> */}
+                            <h1 className={styles.chatEmptyStateTitle}>Do you need ICT support?</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>
                                 <i>Ask your question or try one of the examples below</i>
                             </h2>
@@ -422,14 +431,17 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. fix a VPN SSL handshake error)"
+                            placeholder="To help protect your privacy, don't include personal information such as your name, phone number or email address."
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                             showSpeechInput={showSpeechInput}
                         />
                     </div>
+                    {/*ICT_PATCH/ICT_Feedback_Area */}
+                    <div className={styles.chatfeedbackarea}>
+                        <FeedbackArea />
+                    </div>
                 </div>
-
                 {answers.length > 0 && activeAnalysisPanelTab && (
                     <AnalysisPanel
                         className={styles.chatAnalysisPanel}
@@ -440,7 +452,6 @@ const Chat = () => {
                         activeTab={activeAnalysisPanelTab}
                     />
                 )}
-
                 <Panel
                     headerText="Configure answer generation"
                     isOpen={isConfigPanelOpen}
@@ -482,6 +493,19 @@ const Chat = () => {
                         aria-labelledby={temperatureId}
                         onRenderLabel={(props: ITextFieldProps | undefined) => (
                             <HelpCallout labelId={temperatureId} fieldId={temperatureFieldId} helpText={toolTipText.temperature} label={props?.label} />
+                        )}
+                    />
+
+                    <TextField
+                        id={seedFieldId}
+                        className={styles.chatSettingsSeparator}
+                        label="Seed"
+                        type="text"
+                        defaultValue={seed?.toString() || ""}
+                        onChange={onSeedChange}
+                        aria-labelledby={seedId}
+                        onRenderLabel={(props: ITextFieldProps | undefined) => (
+                            <HelpCallout labelId={seedId} fieldId={seedFieldId} helpText={toolTipText.seed} label={props?.label} />
                         )}
                     />
 

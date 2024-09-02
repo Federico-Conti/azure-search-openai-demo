@@ -55,7 +55,7 @@ export const LoginButton = () => {
     };
     return (
         <DefaultButton
-            text={loggedIn ? `Logout\n${username}` : "Login"}
+            text={loggedIn ? `${username}` : "Login"}
             className={styles.loginButton}
             onClick={loggedIn ? handleLogoutPopup : handleLoginPopup}
         ></DefaultButton>

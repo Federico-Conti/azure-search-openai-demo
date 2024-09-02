@@ -4,26 +4,22 @@ import { Card, CardFooter, CardHeader, CardPreview } from "@fluentui/react-compo
 import { BotSparkleFilled } from "@fluentui/react-icons";
 import { DeleteFilled } from "@fluentui/react-icons";
 import { FolderFilled } from "@fluentui/react-icons";
-import { ClipboardBulletListLtrRegular } from "@fluentui/react-icons";
 import style from "./AboutCard.module.css";
 import React, { useState, ChangeEvent, useEffect } from "react";
 
-const resolveAsset = (asset: string) => {
-    const ASSET_URL = "https://raw.githubusercontent.com/microsoft/fluentui/master/packages/react-components/react-card/stories/src/assets/";
-
-    return `${ASSET_URL}${asset}`;
-};
-
-const useStyles = makeStyles({
-    card: {
-        width: "720px",
-        maxWidth: "100%",
-        backgroundColor: "white"
-    }
-});
+// const useStyles = makeStyles({
+//     card: {
+//         position: "relative",
+//         width: "720px",
+//         maxWidth: "100%",
+//         backgroundColor: "white",
+//         marginBottom: "52px",
+//         height: "100%"
+//     }
+// });
 
 export const AboutCard = () => {
-    const styles = useStyles();
+    // const styles = useStyles();
     const [showCard1, setShowCard1] = useState<boolean>(true);
     const [showCard2, setShowCard2] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -42,17 +38,17 @@ export const AboutCard = () => {
     }, [counter]);
 
     return (
-        <Card className={styles.card}>
+        <div className={style.aboutCard_container}>
             <CardHeader
-                image={<BotSparkleFilled fontSize={"40px"} primaryFill={""} aria-hidden="true" aria-label="Chat logo" />}
+                image={<BotSparkleFilled fontSize={"2.5rem"} primaryFill={"rgba(40, 40, 40, 0.8)"} aria-hidden="true" aria-label="Chat logo" />}
                 header={
                     <Body1>
-                        <b>ChatICT</b> mentioned you
+                        <b>ChatICT</b>
                     </Body1>
                 }
                 description={
                     <Caption1>
-                        About me - <strong>{title}</strong>
+                        About - <strong>{title}</strong>
                     </Caption1>
                 }
             />
@@ -66,9 +62,9 @@ export const AboutCard = () => {
                             particular: Azure Storage as cloud container, Azure Ai Search as vector db, and LLM models such as Azure OpenAI.
                         </p>
                         <p>
-                            ChatICT is a first pilot of an open-book application. It exploits Generative AI technology by integrating the knowledge of our ICT
-                            services stored in policies, procedures, user guides, and other technical documents, providing an interactive experience that
-                            efficiently retrieves answers 'ready for users' from Knowledge Scope.
+                            ChatICT is a first pilot of an agent that exploits Generative AI technology by integrating the knowledge of our ICT services stored
+                            in policies, procedures, user guides, and other technical documents, providing an interactive experience that efficiently retrieves
+                            answers 'ready for users' from Knowledge Scope.
                         </p>
                         Main features:
                         <ul>
@@ -109,19 +105,19 @@ export const AboutCard = () => {
                                 “Knowledge Scope” button.
                             </p>
                             <p style={{ textAlign: "center" }}>
-                                <FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} fontSize={"22px"} />
+                                <FolderFilled fontFamily="" primaryFill={"rgb(255, 165, 0)"} fontSize={"1.375rem"} />
                                 Knwoledge Scope
                             </p>
                         </li>
                         <li>
                             <p>
                                 During the interaction, ChatICT memorizes previous questions and answers to provide a context for subsequent queries. <br />
-                                <i style={{ fontSize: "16px", fontFamily: "italic" }}>
+                                <i style={{ fontSize: "1rem", fontFamily: "italic" }}>
                                     (To get a clearer response, make sure you clear your history before approaching a new topic.)
                                 </i>
                             </p>
                             <p style={{ textAlign: "center" }}>
-                                <DeleteFilled primaryFill={"rgb(66, 73, 73)"} fontSize={"22px"} />
+                                <DeleteFilled primaryFill={"rgb(66, 73, 73)"} fontSize={"1.375rem"} />
                                 Clear chat
                             </p>
                         </li>
@@ -142,7 +138,7 @@ export const AboutCard = () => {
                                 <span className={style.aboutCard_citation}>1. This is a reference</span>
                             </p>
 
-                            <i style={{ fontSize: "16px", fontFamily: "italic" }}>
+                            <i style={{ fontSize: "1rem", fontFamily: "italic" }}>
                                 (If you are not satisfied with the answer ChatICT has provided, you could try to rephrase the question. The answers provided by
                                 the model are not deterministic, with some different information in the input, the output may change and provide better
                                 results.)
@@ -154,10 +150,10 @@ export const AboutCard = () => {
 
             <CardFooter style={{ marginLeft: "auto" }}>
                 <Button
-                    style={{ display: counter < 1 ? "none" : "" }}
+                    style={{ display: counter < 1 ? "none" : "", position: "relative", left: "90%" }}
                     icon={
                         <ArrowReplyRegular
-                            fontSize={40}
+                            fontSize={"2rem"}
                             onClick={() => {
                                 counter > 0 ? setCounter(counter - 1) : setCounter(counter);
                             }}
@@ -165,10 +161,10 @@ export const AboutCard = () => {
                     }
                 ></Button>
                 <Button
-                    style={{ display: counter >= 1 ? "none" : "" }}
+                    style={{ display: counter >= 1 ? "none" : "", position: "relative", left: "90%" }}
                     icon={
                         <ArrowForwardFilled
-                            fontSize={40}
+                            fontSize={"2rem"}
                             onClick={() => {
                                 counter < 1 ? setCounter(counter + 1) : setCounter(counter);
                             }}
@@ -176,6 +172,6 @@ export const AboutCard = () => {
                     }
                 ></Button>
             </CardFooter>
-        </Card>
+        </div>
     );
 };

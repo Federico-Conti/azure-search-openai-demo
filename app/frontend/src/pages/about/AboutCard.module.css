@@ -1,11 +1,23 @@
+@import "./../../../ictconst.css";
+
 .aboutCard_citation {
     font-weight: 500;
     line-height: 24px;
     text-align: center;
     border-radius: 4px;
     padding: 0px 8px;
-    background: #ffccbc;
-    color: #ba000d;
+    background: var(--citationbg);
+    color: var(--citation);
     text-decoration: none;
     cursor: pointer;
+}
+
+.aboutCard_container {
+    position: "relative";
+    width: 720px;
+    max-width: 100%;
+    margin-bottom: 33px;
+    padding: 0;
+    background-color: white;
+    font-size: 0.9rem;
 }

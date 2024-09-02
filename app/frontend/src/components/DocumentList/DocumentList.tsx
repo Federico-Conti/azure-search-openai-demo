@@ -84,15 +84,15 @@ export const DocumentList = ({ className }: Props) => {
                     setInitialFocus
                 >
                     <DismissSquareRegular
-                        fontSize={"35px"}
-                        primaryFill={"rgba(200, 0, 0)"}
+                        fontSize={"2.188rem"}
+                        primaryFill={"rgba(40, 40, 40, 0.8)"}
                         className={styles.documentlist_dismiss}
                         onClick={() => {
                             setIsCalloutVisible(false);
                         }}
                     ></DismissSquareRegular>
                     <h3 className={styles.documentlist_KnowledgeTitle}>
-                        Knowledge Scope <SparkleFilled fontSize={"30px"} primaryFill={"rgb(255, 165, 0)"} />
+                        Knowledge Scope <SparkleFilled fontSize={"1.875rem"} primaryFill={"#0072af"} />
                     </h3>
                     {isLoading && <h4 className={styles.documentlist_loading}>Loading...</h4>}
                     <div className={styles.documentlist_counter}>

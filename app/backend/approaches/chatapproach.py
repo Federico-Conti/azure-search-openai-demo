@@ -12,6 +12,9 @@ class ChatApproach(Approach, ABC):
     query_prompt_few_shots: list[ChatCompletionMessageParam] = [
 
     ]
+   
+   
+   
     NO_RESPONSE = "0"
 
     follow_up_questions_prompt_content = """Generate 3 very brief follow-up questions that the user would likely ask next.
@@ -32,6 +35,7 @@ class ChatApproach(Approach, ABC):
     If you cannot generate a search query, return just the number 0 or an empty stringh.
     """
 
+   
     @property
     @abstractmethod
     def system_message_chat_conversation(self) -> str:
@@ -66,13 +70,15 @@ class ChatApproach(Approach, ABC):
                     search_query = arg.get("search_query", self.NO_RESPONSE)
                     query_lnaguage = arg.get("query_lnaguage", self.NO_RESPONSE)
                     if search_query != self.NO_RESPONSE and search_query != self.NO_RESPONSE:
-                        return (search_query,query_lnaguage)
+                        return (search_query,query_lnaguage) #ICT
         elif query_text := response_message.content:
             if query_text.strip() != self.NO_RESPONSE:
                 return query_text
-        return (search_query, "English")
-        
-    def extract_followup_questions(self, content: str):
+        return (search_query, "English") #ICT
+    
+    def extract_followup_questions(self, content: Optional[str]):
+        if content is None:
+            return content, []
         return content.split("<<")[0], re.findall(r"<<([^>>]+)>>", content)
 
     async def run_without_streaming(
@@ -86,16 +92,17 @@ class ChatApproach(Approach, ABC):
             messages, overrides, auth_claims, should_stream=False
         )
         chat_completion_response: ChatCompletion = await chat_coroutine
-        chat_resp = chat_completion_response.model_dump()  # Convert to dict to make it JSON serializable
-        chat_resp = chat_resp["choices"][0]
-        print(f'RISPOSTA DEL MODELLO\n{chat_resp}')
-        chat_resp["context"] = extra_info
+        content = chat_completion_response.choices[0].message.content
+        role = chat_completion_response.choices[0].message.role
         if overrides.get("suggest_followup_questions"):
-            content, followup_questions = self.extract_followup_questions(chat_resp["message"]["content"])
-            chat_resp["message"]["content"] = content
-            chat_resp["context"]["followup_questions"] = followup_questions
-        chat_resp["session_state"] = session_state
-        return chat_resp
+            content, followup_questions = self.extract_followup_questions(content)
+            extra_info["followup_questions"] = followup_questions
+        chat_app_response = {
+            "message": {"content": content, "role": role},
+            "context": extra_info,
+            "session_state": session_state,
+        }
+        return chat_app_response
 
     async def run_with_streaming(
         self,
@@ -115,7 +122,12 @@ class ChatApproach(Approach, ABC):
             # "2023-07-01-preview" API version has a bug where first response has empty choices
             event = event_chunk.model_dump()  # Convert pydantic model to dict
             if event["choices"]:
-                completion = {"delta": event["choices"][0]["delta"]}
+                completion = {
+                    "delta": {
+                        "content": event["choices"][0]["delta"].get("content"),
+                        "role": event["choices"][0]["delta"]["role"],
+                    }
+                }
                 # if event contains << and not >>, it is start of follow-up question, truncate
                 content = completion["delta"].get("content")
                 content = content or ""  # content may either not exist in delta, or explicitly be None

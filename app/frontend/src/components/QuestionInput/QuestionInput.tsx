@@ -8,6 +8,7 @@ import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
 import { LoginContext } from "../../loginContext";
 import { requireLogin } from "../../authConfig";
+import { getTokenClaims } from "../../authConfig"; //ICT_PATCH/automate_query_log
 
 interface Props {
     onSend: (question: string) => void;
@@ -18,27 +19,66 @@ interface Props {
     showSpeechInput?: boolean;
 }
 
+//ICT_PATCH/automate_query_log
+type Claim = {
+    name: string;
+    value: string;
+};
+
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, initQuestion, showSpeechInput }: Props) => {
     const [question, setQuestion] = useState<string>("");
-    const { instance } = useMsal(); //ICT_PATCH/automate_query_log (era riga 73)
-    const activeAccount = instance.getActiveAccount(); //ICT_PATCH/automate_query_log
     const { loggedIn } = useContext(LoginContext);
+    const [claims, setClaims] = useState<Record<string, unknown> | undefined>(undefined); //ICT_PATCH/automate_query_log
+    const { instance } = useMsal(); //ICT_PATCH/automate_query_log (era riga 73)
+    const automateFlowUrl = "";
 
+    //ICT_PATCH/automate_query_log
+    useEffect(() => {
+        const fetchClaims = async () => {
+            setClaims(await getTokenClaims(instance));
+        };
+
+        fetchClaims();
+    }, []);
+    //ICT_PATCH/automate_query_log
+    const ToString = (a: string | any) => {
+        if (typeof a === "string") {
+            return a;
+        } else {
+            return JSON.stringify(a);
+        }
+    };
+    //ICT_PATCH/automate_query_log
+    let createClaims = (o: Record<string, unknown> | undefined) => {
+        return Object.keys(o ?? {}).map((key: string) => {
+            let originalKey = key;
+            try {
+                // Some claim names may be a URL to a full schema, just use the last part of the URL in this case
+                const url = new URL(key);
+                const parts = url.pathname.split("/");
+                key = parts[parts.length - 1];
+            } catch (error) {
+                // Do not parse key if it's not a URL
+            }
+            return { name: key, value: ToString((o ?? {})[originalKey]) };
+        });
+    };
+
+    //ICT_PATCH/automate_query_log
+    const oid: string = createClaims(claims)
+        .filter(item => item.name === "objectidentifier")
+        .map(item => item.value)[0];
+
+    //ICT_PATCH/automate_query_log
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // prende username utente
-        // body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.username ?? appServicesToken?.user_claims?.preferred_username}` })
-        // prende oif utente
-        body: JSON.stringify({ UserQuery: question, UserEmail: `${activeAccount?.idTokenClaims?.oid}` })
+        body: JSON.stringify({ UserQuery: question, User: oid })
     };
 
-    //FlowName: ChatICTV3:Log_AddUserQuery
+    //ICT_PATCH/automate_query_log
     async function SendUserQueryToAutomateFlow(): Promise<string> {
-        const response = await fetch(
-            "https://prod-66.westeurope.logic.azure.com:443/workflows/f75884186a1342abae5d51041a04a9d6/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yBH14qZDakJDfcMlsacg0WDLIi0PRPe29ZU9leFnRG0",
-            requestOptions
-        );
+        const response = await fetch(automateFlowUrl, requestOptions);
         if (!response.ok) {
             throw new Error(`automate response was not ok: ${response.status}`);
         }
@@ -88,7 +128,19 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             <TextField
                 className={styles.questionInputTextArea}
                 disabled={disableRequiredAccessControl}
-                placeholder={placeholder}
+                placeholder={"To help protect your privacy, don't include personal information such as your name, phone number or email address."}
+                multiline
+                resizable={false}
+                borderless
+                value={question}
+                onChange={onQuestionChange}
+                onKeyDown={onEnterPress}
+            />
+            {/* Aggiunto TextField per Mobile */}
+            <TextField
+                className={styles.questionInputTextAreaMobile}
+                disabled={disableRequiredAccessControl}
+                placeholder={"AI-generated content may be incorrect. Closely review what is generated."}
                 multiline
                 resizable={false}
                 borderless
@@ -98,13 +150,13 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
             />
             <div className={styles.questionInputButtonsContainer}>
                 <Tooltip content="Ask question button" relationship="label">
-                    <Button size="medium" icon={<Send28Filled primaryFill="black" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
+                    <Button size="medium" icon={<Send28Filled primaryFill="#0072af" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
             </div>
             {showSpeechInput && <SpeechInput updateQuestion={setQuestion} />}
             {/* Aggiunto Allert per informare l'utente che il chatbot può fare errori */}
             <div className={styles.questionInputAllert}>
-                <p className={styles.questionInputAllertText}>ChatICT can make mistakes. Check important info.</p>
+                <p className={styles.questionInputAllertText}>AI-generated content may be incorrect. Closely review what is generated.</p>
                 {/* <p className={styles.questionInputAllertText}>ChatICT can make mistakes, but people from ICT team can make worse ones &#128512;</p> */}
             </div>
         </Stack>
