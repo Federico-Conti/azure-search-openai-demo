@@ -1,21 +1,7 @@
 import { Example } from "./Example";
+import { useTranslation } from "react-i18next";
 
 import styles from "./Example.module.css";
-
-const DEFAULT_EXAMPLES: string[] = [
-    "How to install a printer?",
-    "How to reset password?",
-    "I need to install a new software",
-    "How can I install vpn?",
-    "Sync my email and calendar with iPhone",
-    "Connect to wifi with Android device"
-];
-
-const GPT4V_EXAMPLES: string[] = [
-    "Compare the impact of interest rates and GDP in financial markets.",
-    "What is the expected trend for the S&P 500 index over the next five years? Compare it to the past S&P 500 performance",
-    "Can you identify any correlation between oil prices and stock market trends?"
-];
 
 interface Props {
     onExampleClicked: (value: string) => void;
@@ -23,6 +9,18 @@ interface Props {
 }
 
 export const ExampleList = ({ onExampleClicked, useGPT4V }: Props) => {
+    const { t } = useTranslation();
+
+    const DEFAULT_EXAMPLES: string[] = [
+        t("defaultExamples.1"),
+        t("defaultExamples.2"),
+        t("defaultExamples.3"),
+        t("defaultExamples.4"),
+        t("defaultExamples.5"),
+        t("defaultExamples.6")
+    ];
+    const GPT4V_EXAMPLES: string[] = [t("gpt4vExamples.1"), t("gpt4vExamples.2"), t("gpt4vExamples.3")];
+
     return (
         <ul className={styles.examplesNavList}>
             {(useGPT4V ? GPT4V_EXAMPLES : DEFAULT_EXAMPLES).map((question, i) => (

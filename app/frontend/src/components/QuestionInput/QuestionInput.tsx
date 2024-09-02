@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { Button, Tooltip } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
+import { useTranslation } from "react-i18next";
 import { useMsal } from "@azure/msal-react";
-
 import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
 import { LoginContext } from "../../loginContext";
@@ -84,6 +84,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
         }
         return await response.json();
     }
+    const { t } = useTranslation();
+    const [isComposing, setIsComposing] = useState(false);
 
     useEffect(() => {
         initQuestion && setQuestion(initQuestion);
@@ -102,10 +104,19 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
     };
 
     const onEnterPress = (ev: React.KeyboardEvent<Element>) => {
+        if (isComposing) return;
+
         if (ev.key === "Enter" && !ev.shiftKey) {
             ev.preventDefault();
             sendQuestion();
         }
+    };
+
+    const handleCompositionStart = () => {
+        setIsComposing(true);
+    };
+    const handleCompositionEnd = () => {
+        setIsComposing(false);
     };
 
     const onQuestionChange = (_ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
@@ -147,9 +158,11 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
                 value={question}
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
+                onCompositionStart={handleCompositionStart}
+                onCompositionEnd={handleCompositionEnd}
             />
             <div className={styles.questionInputButtonsContainer}>
-                <Tooltip content="Ask question button" relationship="label">
+                <Tooltip content={t("tooltips.submitQuestion")} relationship="label">
                     <Button size="medium" icon={<Send28Filled primaryFill="#0072af" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
             </div>
