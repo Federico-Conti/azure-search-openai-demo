@@ -3,7 +3,7 @@ import { Stack, TextField } from "@fluentui/react";
 import { Button, Tooltip } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import { useMsal } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react"; //ICT_PATCH/automate_query_log
 import styles from "./QuestionInput.module.css";
 import { SpeechInput } from "./SpeechInput";
 import { LoginContext } from "../../loginContext";
@@ -146,6 +146,8 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, init
                 value={question}
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
+                onCompositionStart={handleCompositionStart}
+                onCompositionEnd={handleCompositionEnd}
             />
             {/* Aggiunto TextField per Mobile */}
             <TextField
